@@ -1,0 +1,4 @@
+before_update_audit BEFORE UPDATE ON Audit
+BEGIN
+SELECT RAISE(ABORT, 'Error: Updating audit table is not allowed.');
+END

@@ -1,0 +1,196 @@
+<!-- Copyright 2016 Google Inc. All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// -->
+<!DOCTYPE html>
+<html class="google-js" lang="en">
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; object-src 'none'; img-src 'self'; script-src 'self' 'unsafe-eval' https://www.google.com/js/maia.js; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://www.google.com/css/maia.css; font-src https://fonts.gstatic.com;">
+<meta content="initial-scale=1, minimum-scale=1, width=device-width" name="viewport">
+<title>
+  [APPLICATION_TITLE]
+</title>
+<link href="https://www.google.com/css/maia.css" rel="stylesheet" />
+<link href="static/vsaq.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" rel="stylesheet" />
+<link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="login/css/style.css">
+<div class="maia-header" id="maia-header" role="banner">
+  <div class="maia-aux">
+    <h1>
+      <a href="/">[APPLICATION_ACRONYM]</a>
+    </h1>
+    <h2>[APPLICATION_TITLE]</h2>
+  </div>
+</div>
+
+<div class="maia-nav maia-complex" id="maia-nav-x" role="navigation" style="z-index: 1;">
+  <div class="maia-aux">
+    <ul style="z-index: 1;">
+    </ul>
+  </div>
+</div>
+
+<div id="maia-main" role="main">
+  <div class="maia-article" role="article">
+    <div class="maia-cols">
+      <div class="maia-col-12" style="position: relative">
+        <div class="butterbar-container">
+          <div class="vsaq-invisible" id="_vsaq_butterbar"></div>
+        </div>
+      </div>
+      <div class="maia-col-12">
+        <div class="main-content">
+          <p>
+            Load answers from a file you have saved on your computer:
+            <input type="file" id="answer_file"/><br />
+          </p>
+          <form id="postdata">
+            <input type="hidden" name="_rom_" id="_rom_" value="{{readonly()|lower}}">
+            <input type="hidden" name="draft" id="draft" value="false">
+            <input type="hidden" name="_user_" id="_user_" value="{{user()}}">
+            <input type="hidden" name="_auth_" id="_auth_" value="{{auth()}}">
+            <input type="hidden" name="_submissions_mode_" id="_submissions_mode_" value="">
+          </form>
+          <form id="_vsaq_export_element">
+            <div id="_vsaq_body" class="vsaq-body">
+              <p>
+              Please reload this page with a qpath parameter.<br />
+              E.g.: qpath=questionnaires/mstar_0_1.json<br />
+              Link: <a href="?qpath=questionnaires/mstar_0_1.json" >Example</a><br />
+              </p>
+            </div>
+          </form>
+          <div id='footer' class= "box">
+            <div class="box-container">
+              <div class="box">
+                Q. ID: <span id='q_id'>{{ q_id() }}</span>
+                <span id='_app_status'></span>
+                <span id="_user-detail" class="pk-main-nav__item pk-signed-in-user"></span>
+                <a id="_user-sign-out" class="pk-main-nav__item pk-sign-out eh-signout"></a>
+              </div>
+              <div class="box">
+                <span class="vsaq-saved-status">
+                  Status: <span id="_vsaq_saved_status" class="pk-invisible">No changes</span>
+                  <span id="_vsaq_signin_status" class="pk-visible">This questionnaire is <b>readonly</b>. Please <a class="js-signin-modal-trigger pk-main-nav__item" data-signin="login">Sign in</a> to edit/save.</span>
+                </span>
+              </div>
+            </div>
+            <div class="box-container">
+              <div class="box">
+                <a class="maia-button" id="_vsaq_export_questionnaire">Export</a>
+                <a class="maia-button eh-clear" id="_vsaq_clear_questionnaire">Reset</a>
+                <a class="maia-button eh-save" id="_vsaq_save_questionnaire">Save</a>
+                <a class="maia-button eh-submit" id="_vsaq_submit_questionnaire">Submit</a>
+              </div>
+              <input name=_csrf_token id='_csrf_token' type=hidden value="{{ csrf_token() }}">
+              <div class="box">
+                <input type="text" name="search_qid" id="search_qid" size="20" margin="5" placeholder="Application metadata" /><a class="maia-button eh-load" id="_vsaq_search_questionnaire">I'm Feeling Lucky</a>
+              </div>
+              <div class="box">
+                <a class="maia-button eh-submissions js-submissions-modal-trigger" id="_vsaq_all_submissions" data-submissions="submissions">All Submissions</a>
+                <a class="maia-button eh-revisions maia-button-disabled js-submissions-modal-trigger" id="_vsaq_revisions" data-submissions="submissions">Revisions</a>
+                <a class="maia-button eh-diff maia-button-disabled" id="_vsaq_diff">Diff</a>
+              </div>
+              <div class="box">
+                <a class="maia-button eh-review maia-button-disabled" id="_vsaq_review_questionnaire">Finish Review</a>
+                <a class="maia-button eh-approve maia-button-disabled" id="_vsaq_approve_questionnaire">Approve</a>
+              </div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    <div id="maia-signature"></div>
+    <div id="vsaq-dialogs"></div>
+    <script src="https://www.google.com/js/maia.js"></script>
+    <script src="vsaq_binary.js"></script>
+  </div>
+</div>
+<div id="footer-diff">
+  <b>Modified elements:</b>
+  <div id="footer-diff-container">
+  </div>
+</div>
+<div id="toastbar"></div>
+<div id="pk-signin-modal" class="pk-signin-modal js-signin-modal">
+  <div class="pk-signin-modal__container">
+    <div class="js-signin-modal-switcher">
+      <a href="#0" data-signin="login" data-type="login"></a>
+    </div>
+
+    <div class="pk-signin-modal__block js-signin-modal-block" data-type="login">
+      <form class="pk-signin-modal__form">
+        <p class="pk-signin-modal__fieldset">
+          <label class="pk-signin-modal__label pk-signin-modal__label--username pk-signin-modal__label--image-replace" for="signin-username">Username</label>
+          <input class="pk-signin-modal__input pk-signin-modal__input--full-width pk-signin-modal__input--has-padding pk-signin-modal__input--has-border" id="signin-username" autocomplete="username" type="text" placeholder="Username without domain">
+          <span class="pk-signin-modal__error">A valid user name is required.</span>
+        </p>
+
+        <p class="pk-signin-modal__fieldset">
+          <label class="pk-signin-modal__label pk-signin-modal__label--password pk-signin-modal__label--image-replace" for="signin-password">Password</label>
+          <input class="pk-signin-modal__input pk-signin-modal__input--full-width pk-signin-modal__input--has-padding pk-signin-modal__input--has-border" id="signin-password" type="password" placeholder="Password">
+          <span class="pk-signin-modal__error">Password is required.</span>
+          <a href="#0" class="pk-signin-modal__hide-password js-hide-password">Show</a>
+          <div class="pk-figure" id="pk-strength">Strength (score):</div>
+          <div class="pk-figure" id="pk-strength-human"></div>
+          (<div class="pk-figure" id="pk-strength-score">Weak</div>)
+        </p>
+        <p class="pk-signin-modal__fieldset">
+          <input id="pk-signin-btn" class="pk-signin-modal__input pk-signin-modal__input--full-width eh-login" type="submit" value="Login">
+        </p>
+      </form>       
+    </div>
+  </div>
+</div>
+<div id="pk-submissions-modal" class="pk-submissions-modal js-submissions-modal">
+  <div class="pk-submissions-modal__container">
+    <div class="js-submissions-modal-switcher">
+      <a href="#0" data-submissions="submissions" data-type="submissions"></a>
+    </div>
+
+    <div class="pk-submissions-modal__block js-submissions-modal-block" data-type="submissions">
+      <form class="pk-submissions-modal__form">
+        <div class="pk-inline-item" id="pk-inline-item-container">
+          Now showing results for: 
+          <input type="checkbox" checked id="pk-checkbox-submitted" name="pk-checkbox-submitted" value="s" class="pk-inline-input eh-submissionCheckChanged">
+          <label for="pk-checkbox-submitted" class="pk-inline-label">Submitted</label>
+          <input type="checkbox" id="pk-checkbox-in-review" name="pk-checkbox-in-review" value="r" class="pk-inline-input eh-submissionCheckChanged">
+          <label for="pk-checkbox-in-review" class="pk-inline-label">In Review</label>
+          <input type="checkbox" id="pk-checkbox-approved" name="pk-checkbox-approved" value="a" class="pk-inline-input eh-submissionCheckChanged">
+          <label for="pk-checkbox-approved" class="pk-inline-label">Approved</label>
+      </div>
+        <p class="pk-submissions-modal__fieldset">
+          <input type="text" id="pk-metadataSearchInput" class="pk-metadataSearchInput" placeholder="Begin typing to filter results.." />
+          <table id="pk-metadataTable">
+            <tr class="pk-header">
+              <th style="width:9%;">QID / Rev</th>
+              <th style="width:6%;">Status</th>
+              <th style="width:10%;">Project</th>
+              <th style="width:10%;">[TEAM_CONTACT]</th>
+              <th style="width:16%;">Team E-mail</th>
+              <th style="width:5%;">[TEAM_IDENTIFIER_LABEL]</th>
+              <th style="width:5%;">[PROJECT_IDENTIFIER_LABEL]</th>
+              <th style="width:6%;">Updated</th>
+              <th style="width:8%;">Timestamp</th>
+              <th style="width:16%;">Submitter</th>
+              <th style="width:12%;">Action Items</th>
+            </tr>
+          </table>
+        </p>
+      </form>       
+    </div>
+  </div>
+</div>
+<script src="login/js/main.js"></script>
+</html>

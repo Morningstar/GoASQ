@@ -1,0 +1,19 @@
+# Ignore build folder
+build/
+
+# Ignore third_party dependencies and other dependent modules
+third_party/
+flask/
+Logs/
+uploads/
+LocalLaunchPad/
+templates.soy
+*.pyc
+
+# Others
+.DS_Store
+*.zip
+*.pem
+*.db
+*.out
+*.bak

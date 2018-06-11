@@ -1,0 +1,397 @@
+/** 
+# Copyright 2018 Morningstar Inc. All rights reserved.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+*/
+
+/* Primary style */
+
+*, *::after, *::before {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/*html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "PT Sans", sans-serif;
+  color: #505260;
+  background-color: white;
+}
+*/
+/* x sigin popup */
+.pk-signin-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(52, 54, 66, 0.9);
+  z-index: 3;
+  overflow-y: auto;
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.pk-signin-modal.pk-signin-modal--is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.pk-signin-modal__container {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  background: #FFF;
+  margin: 3em auto 4em;
+  cursor: auto;
+  border-radius: 0.25em;
+  -webkit-transform: translateY(-30px);
+      -ms-transform: translateY(-30px);
+          transform: translateY(-30px);
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  /* @alternate */
+  transition: transform 0.3s;
+  /* @alternate */
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.pk-signin-modal--is-visible .pk-signin-modal__container {
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+}
+
+@media only screen and (min-width: 600px) {
+  .pk-signin-modal__container {
+    margin: 4em auto;
+  }
+  .pk-signin-modal__switcher a {
+    height: 70px;
+    line-height: 70px;
+  }
+}
+
+.pk-signin-modal__form {
+  padding: 1.4em;
+}
+
+.pk-signin-modal__fieldset {
+  position: relative;
+  margin: 1.4em 0;
+}
+
+.pk-signin-modal__fieldset:first-child {
+  margin-top: 0;
+}
+
+.pk-signin-modal__fieldset:last-child {
+  margin-bottom: 0;
+}
+
+.pk-signin-modal__label {
+  font-size: 1.4rem;
+}
+
+.pk-signin-modal__label.pk-signin-modal__label--image-replace {
+  /* replace text with an icon */
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+}
+
+.pk-signin-modal__label.pk-signin-modal__label--username {
+  background-image: url("../img/pk-icon-username.svg");
+}
+
+.pk-signin-modal__label.pk-signin-modal__label--password {
+  background-image: url("../img/pk-icon-password.svg");
+}
+
+.pk-signin-modal__input {
+  margin: 0;
+  padding: 0;
+  border-radius: 0.25em;
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.2rem;
+}
+
+.pk-signin-modal__input.pk-signin-modal__input--full-width {
+  width: 100%;
+}
+
+.pk-signin-modal__input.pk-signin-modal__input--has-padding {
+  padding: 12px 20px 12px 50px;
+}
+
+.pk-signin-modal__input.pk-signin-modal__input--has-border {
+  border: 1px solid #d2d8d8;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+}
+
+.pk-signin-modal__input.pk-signin-modal__input--has-border:focus {
+  border-color: #343642;
+  -webkit-box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
+          box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
+  outline: none;
+}
+
+.pk-signin-modal__input.pk-signin-modal__input--has-error {
+  border: 1px solid #d76666;
+}
+
+.pk-signin-modal__input[type=submit] {
+  padding: 16px 0;
+  cursor: pointer;
+  background: #4173c9;
+  color: #FFF;
+  font-weight: bold;
+  border: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pk-signin-modal__input[type=submit]:hover, .pk-signin-modal__input[type=submit]:focus {
+  background: #3143d9;
+  outline: none;
+}
+
+.pk-signin-modal__hide-password {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  padding: 6px 15px;
+  border-left: 1px solid #d2d8d8;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #343642;
+}
+
+.pk-signin-modal__error {
+  display: inline-block;
+  position: absolute;
+  left: -5px;
+  bottom: -35px;
+  background: rgba(215, 102, 102, 0.9);
+  padding: .4em;
+  z-index: 2;
+  color: #FFF;
+  font-size: 1.3rem;
+  border-radius: 0.25em;
+  /* prevent click and touch events */
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.2s 0s, visibility 0s 0.2s;
+  transition: opacity 0.2s 0s, visibility 0s 0.2s;
+}
+
+.pk-signin-modal__error::after {
+  /* triangle */
+  content: '';
+  position: absolute;
+  left: 22px;
+  bottom: 100%;
+  height: 0;
+  width: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(215, 102, 102, 0.9);
+}
+
+.pk-signin-modal__error.pk-signin-modal__error--is-visible {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.2s 0s, visibility 0s 0s;
+  transition: opacity 0.2s 0s, visibility 0s 0s;
+}
+
+@media only screen and (min-width: 600px) {
+  .pk-signin-modal__form {
+    padding: 2em;
+  }
+  .pk-signin-modal__fieldset {
+    margin: 0.7em 0;
+  }
+  .pk-signin-modal__fieldset:first-child {
+    margin-top: 0;
+  }
+  .pk-signin-modal__fieldset:last-child {
+    margin-bottom: 0;
+  }
+  .pk-signin-modal__input.pk-signin-modal__input--has-padding {
+    padding: 16px 20px 16px 50px;
+  }
+  .pk-signin-modal__input[type=submit] {
+    padding: 16px 0;
+  }
+}
+
+.pk-signin-modal__message {
+  padding: 1.4em 1.4em 0;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media only screen and (min-width: 600px) {
+  .pk-signin-modal__message {
+    padding: 2em 2em 0;
+  }
+}
+
+.pk-signin-modal__bottom-message {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -30px;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.pk-signin-modal__bottom-message a {
+  color: #FFF;
+  text-decoration: underline;
+}
+
+.pk-signin-modal__block {
+  display: none;
+}
+
+.pk-signin-modal__block.pk-signin-modal__block--is-selected {
+  display: block;
+}
+
+.pk-main-nav__item {
+  cursor: pointer;
+  height: 20px;
+  line-height: 5px;
+  padding-left: 1%;
+  color: #FFF;
+  padding: .1em 1em;
+  border-radius: 50em;
+  background: #F88;
+  max-width: 70px;
+}
+
+.pk-signed-in-user {
+  visibility: visible;
+  color: #000;
+  background: #4F88;
+  margin-left: 5px;
+  margin-right: -5px;
+  border-radius: 50em 0 0 50em;
+}
+
+.pk-invisible {
+  visibility: hidden;
+}
+
+.pk-sign-out {
+  visibility: visible;
+  cursor: pointer;
+  color: #FFF;
+  background: #F88;
+  margin-left: 0px;
+  margin-right: 5px;
+  border-radius: 0 50em 50em 0;
+}
+
+.pk-visible {
+  visibility: visible;
+}
+
+.pk-figure {
+    display: inline-block;
+    font-family:"PT Sans",sans-serif;
+}
+
+/* Toast message style */
+
+/* The toastbar - position it at the bottom and in the middle of the screen */
+#toastbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    max-height: 52px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #333; /* Black background color */
+    color: #fff; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 38%; /* Center the toastbar */
+    top: 85px; /* 30px from the bottom */
+}
+
+/* Show the toastbar when clicking on a button (class added with JavaScript) */
+#toastbar.show {
+    visibility: visible; /* Show the toastbar */
+
+/* Add animation: Take 0.5 seconds to fade in and out the toastbar. 
+However, delay the fade out process for 2.5 seconds */
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 9.0s;
+}
+
+#toastbar.hide {
+    visibility: hidden; /* Hide the toastbar */
+}
+
+/* Animations to fade the toastbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}

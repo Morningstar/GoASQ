@@ -1,0 +1,4 @@
+before_delete_audit BEFORE DELETE ON Audit
+BEGIN
+SELECT RAISE(ABORT, 'Error: Deleting from audit table is not allowed.');
+END

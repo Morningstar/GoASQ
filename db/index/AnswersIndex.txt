@@ -1,0 +1,1 @@
+idx_AnswersIndex ON Answers (app_tid, app_name, app_champion, qid, app_pid)

@@ -1,0 +1,4 @@
+before_delete_answers BEFORE DELETE ON Answers
+BEGIN 
+SELECT RAISE(ABORT, 'Error: Deleting an existing questionnaire is not allowed.');
+END

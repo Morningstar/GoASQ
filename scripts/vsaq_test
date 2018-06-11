@@ -1,0 +1,110 @@
+#!/usr/bin/perl
+# Copyright 2018 Morningstar Inc. All rights reserved.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# vsaq_test
+# By; Brian Cameron (brian.cameron@morningstar.com)
+#
+# A simple Perl program that validates a VSAQ Questionnaire JSON file
+# reporting about common errors, including:
+# - An "id" value not being unique.
+# - An id (choice) used in a combo/check widget not being unique.
+# - A "cond" value pointing to an invalid "id" value.
+#
+# Usage: vsaq_test (VSAQ JSON filename)
+# - The filename should correspond to the VSAQ JSON file to check.
+#
+use warnings;
+
+my $idhash     = {};
+my $choicehash = {};
+my $error_flag = 0;
+
+if (!$ARGV[0]) {
+  print "\nUsage: checkjson (VSAQ JSON filename)\n\n";
+  exit;
+}
+
+my $filename = $ARGV[0];
+if (! -f $filename) {
+  print "\nFilename \"$filename\" does not exist.\n\n";
+  exit;
+}
+
+my $line_cnt = 1;
+open (my $fh, '<:encoding(UTF-8)', $filename) or die "Could not open file $filename' $!";
+while (my $line = <$fh>) {
+  chomp $line;
+  if ($line =~ /\"id\"/) {
+    my $idval = $line;
+    $idval =~ s/^.*:\s*//g;
+    $idval =~ s/[",]//g;
+    if ($idhash{$idval}) {
+       if ($error_flag == 0) {
+          print "\n";
+       }
+       print "ERROR (line $line_cnt): The ID #$idval# is used more than once.\n";
+       $error_flag=1;
+    }
+    $idhash{$idval} = 1;
+  }
+  if ($line =~ /[{]\".*\":\s*\".*\"[}]/) {
+    my $choiceval = $line;
+    $choiceval =~ s/\":\s*\".*\"[}]//g;
+    $choiceval =~ s/^\s*[{]\"//g;
+    $choiceval =~ s/,//g;
+    $choiceval =~ s/\s*$//g; 
+    if ($choicehash{$choiceval}) {
+       if ($error_flag == 0) {
+          print "\n";
+       }
+       print "ERROR (line $line_cnt): The choice #$choiceval# is used more than once.\n";
+       $error_flag=1;
+    }
+    $choicehash{$choiceval} = 1;
+  }
+  $line_cnt += 1;
+}
+close ($fh);
+
+$line_cnt = 1;
+open (my $fh2, '<:encoding(UTF-8)', $filename) or die "Could not open file $filename' $!";
+while (my $line = <$fh2>) {
+  chomp $line;
+  if ($line =~ /\"cond\"/) {
+    my $condval = $line;
+    $condval =~ s/.*:\s*//g;
+    $condval =~ s/[",!()]//g;
+    $condval =~ s/&&//g;
+    $condval =~ s/\|\|//g;
+    $condval =~ s/\s+/ /g;
+
+    my @words = split / /, $condval;
+    foreach $word (@words) {
+       if (! $choicehash{$word}) {
+          if ($error_flag == 0) {
+             print "\n";
+          }
+          print "ERROR (line $line_cnt): The condition #$word# is not defined.\n";
+          $error_flag=1;
+       }
+    }
+  }
+  $line_cnt += 1;
+}
+close ($fh2);
+
+if ($error_flag == 0) {
+   print "\nNo errors found in file \"$filename\".\n";
+}
+print "\n";

@@ -1,0 +1,4 @@
+after_update_answers AFTER UPDATE ON Answers
+BEGIN
+INSERT into Audit (qid, app_status, app_tid, app_pid, app_name, app_champion, app_team_email, user_name, timestamp, answer, comments, action_items, submitter_email) values(OLD.qid, OLD.app_status, OLD.app_tid, OLD.app_pid, OLD.app_name, OLD.app_champion, OLD.app_team_email, OLD.user_name, OLD.timestamp, OLD.answer, OLD.comments, OLD.action_items, OLD.submitter_email);
+END;

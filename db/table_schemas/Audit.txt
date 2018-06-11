@@ -1,0 +1,1 @@
+Audit (audit_id INTEGER PRIMARY KEY AUTOINCREMENT, qid TEXT, app_status TEXT, app_tid TEXT NULL, app_pid TEXT NULL, app_name TEXT, app_champion TEXT, app_team_email TEXT, user_name TEXT, timestamp DATETIME NOT NULL, answer TEXT, comments TEXT, action_items TEXT, submitter_email TEXT, audit_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL)

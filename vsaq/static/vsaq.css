@@ -1,0 +1,430 @@
+/**
+ * Copyright 2016 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * Any custom VSAQ (core) css will be contained here.
+ */
+#footer {
+  position:fixed;
+  bottom:0;
+  width:100%;
+  max-width:978px;
+  background:#fffbe4;
+  border-color:#f8f6e6;
+  border: 1px solid #ccc;
+  padding: 0 16px 0px;
+}
+
+#footer-diff {
+   position:fixed;
+   bottom:76px;
+   right:20px;
+   overflow-y: auto;
+   width:100%;
+   max-width:180px;
+   max-height:380px;
+   height:175px;
+   display: none;
+   background:#fffbe4;
+   border-color:#f8f6e6;
+   counter-reset: Serial;
+}
+
+#footer-diff-container p a:first-child:before
+{
+  counter-increment: Serial;
+  content: counter(Serial) ".";
+}
+
+.box {
+  margin: 0 0 1px;
+  box-sizing: border-box;
+  display: inline-block;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+  -webkit-padding-before: 0em;
+  -webkit-padding-start: 0em;
+  -webkit-padding-end: 0em;
+  -webkit-padding-after: 0em;
+  min-width: -webkit-min-content;
+}
+
+.box-container {
+  display: block;
+}
+
+.modified {
+  background-color: orange;
+}
+
+.maia-button {
+  font-size: 11px;
+  font-weight: normal;
+}
+
+.vsaq-saved-status {
+  margin-left: 5px;
+}
+
+form input {
+    margin: 0 5px 5px;
+}
+
+/* Primary style */
+
+*, *::after, *::before {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* x sigin popup */
+.pk-submissions-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(52, 54, 66, 0.9);
+  z-index: 3;
+  overflow-y: auto;
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.3s, visibility 0.3s;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.pk-submissions-modal.pk-submissions-modal--is-visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.pk-submissions-modal__container {
+  position: relative;
+  width: 90%;
+  max-width: 1340px;
+  background: #FFF;
+  margin: 3em auto 4em;
+  cursor: auto;
+  border-radius: 0.25em;
+  -webkit-transform: translateY(-30px);
+      -ms-transform: translateY(-30px);
+          transform: translateY(-30px);
+  -webkit-transition: -webkit-transform 0.3s;
+  transition: -webkit-transform 0.3s;
+  /* @alternate */
+  transition: transform 0.3s;
+  /* @alternate */
+  transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.pk-submissions-modal--is-visible .pk-submissions-modal__container {
+  -webkit-transform: translateY(0);
+      -ms-transform: translateY(0);
+          transform: translateY(0);
+}
+
+@media only screen and (min-width: 600px) {
+  .pk-submissions-modal__container {
+    margin: 4em auto;
+  }
+  .pk-submissions-modal__switcher a {
+    height: 70px;
+    line-height: 70px;
+  }
+}
+
+.pk-submissions-modal__form {
+  padding: 1.4em;
+}
+
+.pk-submissions-modal__fieldset {
+  position: relative;
+  margin: 1.4em 0;
+}
+
+.pk-submissions-modal__fieldset:first-child {
+  margin-top: 0;
+}
+
+.pk-submissions-modal__fieldset:last-child {
+  margin-bottom: 0;
+}
+
+.pk-submissions-modal__label {
+  font-size: 1.4rem;
+}
+
+.pk-submissions-modal__label.pk-submissions-modal__label--image-replace {
+  /* replace text with an icon */
+  display: inline-block;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  overflow: hidden;
+  text-indent: 100%;
+  white-space: nowrap;
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+}
+
+.pk-submissions-modal__label.pk-submissions-modal__label--username {
+  background-image: url("../img/pk-icon-username.svg");
+}
+
+.pk-submissions-modal__label.pk-submissions-modal__label--password {
+  background-image: url("../img/pk-icon-password.svg");
+}
+
+.pk-submissions-modal__input {
+  margin: 0;
+  padding: 0;
+  border-radius: 0.25em;
+  font-family: "PT Sans", sans-serif;
+  font-size: 1.2rem;
+}
+
+.pk-submissions-modal__input.pk-submissions-modal__input--full-width {
+  width: 100%;
+}
+
+.pk-submissions-modal__input.pk-submissions-modal__input--has-padding {
+  padding: 12px 20px 12px 50px;
+}
+
+.pk-submissions-modal__input.pk-submissions-modal__input--has-border {
+  border: 1px solid #d2d8d8;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+}
+
+.pk-submissions-modal__input.pk-submissions-modal__input--has-border:focus {
+  border-color: #343642;
+  -webkit-box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
+          box-shadow: 0 0 5px rgba(52, 54, 66, 0.1);
+  outline: none;
+}
+
+.pk-submissions-modal__input.pk-submissions-modal__input--has-error {
+  border: 1px solid #d76666;
+}
+
+.pk-submissions-modal__input[type=submit] {
+  padding: 16px 0;
+  cursor: pointer;
+  background: #4173c9;
+  color: #FFF;
+  font-weight: bold;
+  border: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.pk-submissions-modal__input[type=submit]:hover, .pk-submissions-modal__input[type=submit]:focus {
+  background: #3143d9;
+  outline: none;
+}
+
+.pk-submissions-modal__hide-password {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  padding: 6px 15px;
+  border-left: 1px solid #d2d8d8;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+      -ms-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-size: 1.2rem;
+  color: #343642;
+}
+
+.pk-submissions-modal__error {
+  display: inline-block;
+  position: absolute;
+  left: -5px;
+  bottom: -35px;
+  background: rgba(215, 102, 102, 0.9);
+  padding: .4em;
+  z-index: 2;
+  color: #FFF;
+  font-size: 1.3rem;
+  border-radius: 0.25em;
+  /* prevent click and touch events */
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-transition: opacity 0.2s 0s, visibility 0s 0.2s;
+  transition: opacity 0.2s 0s, visibility 0s 0.2s;
+}
+
+.pk-submissions-modal__error::after {
+  /* triangle */
+  content: '';
+  position: absolute;
+  left: 22px;
+  bottom: 100%;
+  height: 0;
+  width: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid rgba(215, 102, 102, 0.9);
+}
+
+.pk-submissions-modal__error.pk-submissions-modal__error--is-visible {
+  opacity: 1;
+  visibility: visible;
+  -webkit-transition: opacity 0.2s 0s, visibility 0s 0s;
+  transition: opacity 0.2s 0s, visibility 0s 0s;
+}
+
+@media only screen and (min-width: 600px) {
+  .pk-submissions-modal__form {
+    padding: 2em;
+  }
+  .pk-submissions-modal__fieldset {
+    margin: 2em 0;
+  }
+  .pk-submissions-modal__fieldset:first-child {
+    margin-top: 0;
+  }
+  .pk-submissions-modal__fieldset:last-child {
+    margin-bottom: 0;
+  }
+  .pk-submissions-modal__input.pk-submissions-modal__input--has-padding {
+    padding: 16px 20px 16px 50px;
+  }
+  .pk-submissions-modal__input[type=submit] {
+    padding: 16px 0;
+  }
+}
+
+.pk-submissions-modal__message {
+  padding: 1.4em 1.4em 0;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media only screen and (min-width: 600px) {
+  .pk-submissions-modal__message {
+    padding: 2em 2em 0;
+  }
+}
+
+.pk-submissions-modal__bottom-message {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: -30px;
+  text-align: center;
+  font-size: 1.4rem;
+}
+
+.pk-submissions-modal__bottom-message a {
+  color: #FFF;
+  text-decoration: underline;
+}
+
+.pk-submissions-modal__block {
+  display: none;
+}
+
+.pk-submissions-modal__block.pk-submissions-modal__block--is-selected {
+  display: block;
+}
+
+#pk-metadataSearchInput {
+    background-image: url('/static/searchicon.svg'); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+#pk-metadataTable {
+    border-collapse: collapse; /* Collapse borders */
+    table-layout:fixed; 
+    width:100%;
+    /*width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 12px; /* Increase font-size */
+}
+
+#pk-metadataTable th, #pk-metadataTable td {
+    text-align: left; /* Left-align text */
+    padding: 8px; /* Add padding */
+    word-wrap:break-word;
+}
+
+#pk-metadataTable tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd; 
+}
+
+#pk-metadataTable tr.pk-header, #pk-metadataTable tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
+}
+
+.hide {
+  visibility: hidden;
+}
+
+.pk-inline-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+.pk-inline-label {
+    display: inline;
+    font-weight:normal;
+}
+.pk-inline-input[type=checkbox] {
+    display: inline;
+}
+
+input:required:invalid, input:focus:invalid {
+    border: 1px solid red;
+    -moz-box-shadow: none;
+  }
+
+input:required:valid {
+    border:1px solid #ebebeb;
+    -moz-box-shadow: none;
+  }
+textarea:required:invalid, textarea:focus:invalid {
+    border: 1px solid red;
+    -moz-box-shadow: none;
+  }
+
+input:required:valid {
+    border:1px solid #ebebeb;
+    -moz-box-shadow: none;
+  }

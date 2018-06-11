@@ -1,0 +1,92 @@
+# Copyright 2018 Morningstar Inc. All rights reserved.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# configuration settings
+ENABLE_TEST_MODE = False
+ENABLE_TEST_MODE_LOCAL_ONLY = False
+
+# MUST CHECK FOR PROD/DEBUG ENVIRONMENTS
+DEBUG = True
+# The policy of the default logging handler. The default is 'always' which means that 
+# the default logging handler is always active. 'debug' will only activate logging in 
+# debug mode, 'production' will only log in production and 'never' disables it entirely.
+LOGGER_HANDLER_POLICY = 'always'
+PORT = 80
+FLASK_DEBUG=0
+HOST_HOME_URL = 'https://127.0.0.1:80/vsaq.html?qpath=questionnaires/mstar_0_1.json&q='
+
+# Logging
+LOG_FILE_NAME = 'Logs/EGS.log'
+# 4 MB EACH
+LOG_FILE_MAX_SIZE = 4194304
+LOG_FILE_BACKUP_COUNT = 50
+
+# Common
+ALLOWED_USERNAME_CHARACTERS = "[a-zA-Z0-9\@\\\/\.]+"
+CERTIFICATE_FILE = 'cert.pem'
+DATABASE = '/tmp/flaskr.db'
+LOCAL_DB_MODE = '{"FILE_SYSTEM":"True", "SQLITE":"True"}'
+FILE_NAMING_CONVENTION = '{"conventionKeys": ["app_name", "app_champion", "app_team_email", "app_tid", "app_pid"]}'
+JSON_AS_ASCII = False
+JSONIFY_MIMETYPE = 'application/json'
+MAX_CONTENT_LENGTH = 102400
+PERMANENT_SESSION_LIFETIME = 86400
+PRIVATE_KEY_FILE = 'key.pem'
+QUESTIONNAIRES_SERVED = ['mstar_0_1.json','infrastructure.json','physical_and_datacenter.json','security_privacy_programs.json','test_template.json','test_template_extension.json','webapp.json']
+RATE_LIMITING_DEFAULTS = ["20000 per day", "500 per hour"]
+REMEMBER_COOKIE_HTTPONLY = True
+REMEMBER_COOKIE_SECURE = True
+SECRET_KEY = 'ahjramukneevarp'
+SEND_FILE_MAX_AGE_DEFAULT = 30
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_NAME = 'session'
+SESSION_COOKIE_PATH = '/'
+SESSION_COOKIE_SECURE = True
+SESSION_REFRESH_EACH_REQUEST = True
+CERF_STRICT = False
+THREADED = True
+UPLOAD_FOLDER = 'uploads/'
+URL_RULES = ['/', '/static/<pathParam>', '/login/img/<pathParam>', '/login/js/<pathParam>', '/login/css/<pathParam>', '/login/<pathParam>', '/questionnaires/<pathParam>', '/<pathParam>']
+PERMISSIBLE_CONTENT_LENGTHS = {'/submit':1024 * 1024, '/savedraft':1024 * 1024, '/diff':256,'/loadone':256,'/status':256,'/submissions':256,'/logout':256,'/login':256}
+PERMISSIBLE_CONTENT_TYPE='application/x-www-form-urlencoded'
+
+# SSLIFY specific
+SSLIFY_PERMANENT = True
+SSLIFY_PRELOAD = True
+SSLIFY_SKIPS = ''
+SSLIFY_SUBDOMAINS = True
+
+#LDAP
+LDAP_PROVIDERS = ['ldaps://ldap1.example.com','ldaps://ldap2.example.com','ldaps://ldap3.example.com','ldaps://etc.example.com']
+LDAP_PROVIDERS_USE_INDEX = 0
+LDAP_BASE_DN = 'OU=My Cool OU,DC=example,DC=com'
+LDAP_USER_DOMAIN = '@example.com'
+LDAP_SEARCH_CN = 'sAMAccountName='
+LDAP_USERNAME_MAX_LENGTH = 40
+
+MAIL_SERVER_INTERNAL = 'mail.example.com'
+
+# Email notifications about errors
+SERVER_ADMINS = ['admin1@example.com, admin2@example.com']
+MAIL_SENDER = 'YourSecurityTeam@example.com'
+ERROR_DIGEST_CAPACITY = 10
+
+# Email notifications about submissions
+REVIEWERS = ['YourSecurityTeam@example.com']
+REVIEWERS_AD_GROUP = 'CN=Security Team,OU=My Cool OU,OU=Common,OU=My Cool OU,DC=example,DC=com'
+MAIL_SEND_ATTACHMENT = True
+MAIL_SUBJECT = 'QID: {} : Security Architecture Review for project: {}'
+MAIL_BODY_DRAFT = 'Hi there,<br /><br />Please note that your answers for questionnaire ID: <a href="{}{}">{} </a> have been saved as <b>draft</b>. This has <b>NOT</b> been submitted yet. Please answer any remaining question(s) and submit it soon. Feel free to share this e-mail with your colleagues and have them submit with answers to all questions.<br />{}{}<br />Thanks,<br />Security Team<br /><br />(This is an auto-generated email by [APPLICATION_TITLE])'
+MAIL_BODY_SUBMITTED = 'Hello AppSec team,<br /><br /> I have submitted questionnaire ID: <a href="{}{}">{} </a>. Can you please review this? <br />Here is the project summary for your reference:<br /><br /> {} <br /><br />Thanks,<br /> {}<br /><br />(This is an auto-generated email by [APPLICATION_TITLE])'
+MAIL_BODY_IN_REVIEW = 'Hi there,<br /><br />Status of the questionnaire ID: <a href="{}{}">{} </a> has now changed to <b>In-Review</b>. You may expect to receive comments from the reviewers while they are reviewing it.<br />{}{}<br />Thanks,<br />Security Team<br /><br />(This is an auto-generated email by [APPLICATION_TITLE])'
+MAIL_BODY_APPROVED = 'Hi there,<br /><br />Status of the questionnaire ID: <a href="{}{}">{} </a> has now changed to <b>Approved</b>. You may expect to receive approval comments from the reviewers if they have not already shared.<br />Please note that if any pending work items were identified during this review, the team must address those at the earliest.{}{}<br />Thanks,<br />Security Team<br /><br />(This is an auto-generated email by [APPLICATION_TITLE])'
