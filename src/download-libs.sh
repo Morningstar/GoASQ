@@ -16,7 +16,6 @@
 # @fileoverview Shell script to download VSAQ build dependencies
 #
 
-cd "${VSAQ_REFERENCE_DIR}"
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 THIRD_PARTY_DIRECTORY="third_party"
 

@@ -1,6 +1,7 @@
 language: python
 python:
   - 2.7.14
+before_install: cd src
 install:
   - pip install -r requirements-dev.txt
   - ./do.sh install_deps

@@ -526,7 +526,6 @@ goasq_applyKeyMappings() {
     do
       key="\[${i^^}\]"
       value="${section[$i]}"
-      echo ${CMD_REPLACE}"s|${key}|${value}|g" ${sec}
       ${CMD_REPLACE}"s|${key}|${value}|g" ${sec}
       rm -rf ${sec}~
     done
