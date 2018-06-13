@@ -1,12 +1,12 @@
 # Ignore build folder
-build/
+src/build/
 
 # Ignore third_party dependencies and other dependent modules
-third_party/
-flask/
-Logs/
-uploads/
-LocalLaunchPad/
+src/third_party/
+src/flask/
+src/Logs/
+src/uploads/
+src/LocalLaunchPad/
 templates.soy
 *.pyc
 

@@ -83,18 +83,18 @@ GoASQ improves upon VSAQ and addresses these issues by reworking the code so it 
 
 ### Project Structure
 
-* / : top-level directory for common files and most of the server python source files as well as application configuration files and placeholder configuration files.
-* /build : the directory where the build outputs will be placed. It's this directory from where the content is eventually served to the browser clients
-* /client_side_only_impl : directory for the client-side implementation.
-* /db : contains the database table schema and database related other python source files
-* /login : all source files relevant to client side login functionality
-* /Logs : hosts the server log file. These log files are rotated. More on this later.
-* /questionnaires : directory for questionnaire templates.
-* /vsaq : directory for the questionnaire rendering engine library.
-* /scripts : test script to check the validity if the JSON questionnaire. However, the same is also validated at the time of build itself.
-* /third_party : has all the third party dependencies
-* /uploads : directory for keeping the submitted answers in a JSON format in a text file
-* /vsaq : directory for the questionnaire rendering engine library.
+* src/ : top-level directory for common files and most of the server python source files as well as application configuration files and placeholder configuration files.
+* src/build : the directory where the build outputs will be placed. It's this directory from where the content is eventually served to the browser clients
+* src/client_side_only_impl : directory for the client-side implementation.
+* src/db : contains the database table schema and database related other python source files
+* src/login : all source files relevant to client side login functionality
+* src/Logs : hosts the server log file. These log files are rotated. More on this later.
+* src/questionnaires : directory for questionnaire templates.
+* src/vsaq : directory for the questionnaire rendering engine library.
+* src/scripts : test script to check the validity if the JSON questionnaire. However, the same is also validated at the time of build itself.
+* src/third_party : has all the third party dependencies
+* src/uploads : directory for keeping the submitted answers in a JSON format in a text file
+* src/vsaq : directory for the questionnaire rendering engine library.
 
 
 ## Build Prerequisites
@@ -160,7 +160,7 @@ If installing python-ldap using pip doesn't work, see the alternatives below
 
 ## Code Setup
 ----
-These instructions assume a working directory of the repository root.
+These instructions assume a working directory of the {repository root}/src/. Wherever root directory is mentioned, it refers to {repository root}/src/
 
 The root directory includes an easy-to-use setup script called `do.sh`. It supports the following commands:
 
@@ -176,14 +176,23 @@ The root directory includes an easy-to-use setup script called `do.sh`. It suppo
 
 To build GoASQ, run the following commands:
 
-1. `./do.sh install_deps`
-1. `./do.sh build debug`
+1. pip install -r requirements-dev.txt
+1. ./do.sh install_deps
+1. ./do.sh check_deps
+1. ./do.sh clean
+1. ./do.sh build debug or ./do.sh build_prod (to build for production environment)
 
-To setup database for the first time, run the following command from the project root directory:
-1. `./do.sh setup_db`
+To setup database for the first time, run the following command from the {project root directory}/src:
+1. ./do.sh setup_db
 
 Please note that you should be running this command in the capacity of the same user that you'd run the server with.
 Alternatively, use `chown` to own the database file - EGS.db - created under `build\db\`.
+
+To bulk insert a bunch of answers and their revisions that you may have saved into a directory, run the following command from the {project root directory}/src:
+1. ./do.sh bulkinsert_db [/path/to/DB/file.db] [/directory/path/for/input]
+
+To take a backup of the database as a JSON file, run the following command from the {project root directory}/src:
+1. ./do.sh backup_db [/path/to/DB/file.db] [/directory/path/for/output]
 
 ### Local Development Server
 To run the GoASQ development server locally, use the `run` command:
@@ -220,7 +229,7 @@ Alternatively, you can also follow the instructions below for manual deployment.
 
 ##### To deploy GoASQ (with a backend), complete the following steps:
 
-1. To setup database for the first time, run the following command from the project root directory:
+1. To setup database for the first time, run the following command from the {project root directory}/src:
   `./do.sh setup_db`
   If the database already exists, you will need to copy that to the target directory under 
   `[server root directory]/build/db/EGS.db`
@@ -231,7 +240,7 @@ Alternatively, you can also follow the instructions below for manual deployment.
 1. Make chanegs to app.config file to remove any reference to `DEBUG` logging settings and 
   updating the server address, cookie domain etc.
 1. Copy all the python (`.py`), bash shell (`.sh`) and `app.config` files from the project root 
-  directory to the target directory hosted on your web server. Also copy the python files from [project root directory]\db
+  directory to the target directory hosted on your web server. Also copy the python files from [project root directory]\src\db
   directory that contains the `dbUtils.py` and `__init__.py` to the `[target directory]\db`. You do not need to copy the rest of the files from db directory.
 
   The target root directory should look like this:
@@ -382,6 +391,7 @@ Following features may be in the To-Do list (not necessarily in the same order)
 1. Optionally allow auto-commit of backup files in a repository (possibly via a Jenkins job that runs every day?)
 1. CI build for the open source (travis-ci?)
 1. Enable direct remote logging (Splunk?)
+1. Better unit test coverage for server side python code files
 
 ## Contributions
 
