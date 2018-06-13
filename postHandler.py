@@ -132,7 +132,7 @@ class PostHandler(object):
       newStatus = request.form['s']
       qid = request.form['id']
       dbHelper = dbUtils()
-      errCode = dbHelper.updateStatus(qid, newStatus)
+      errCode = dbHelper.updateStatus(qid, newStatus, session.get('_user'))
       if errCode != 0:
         abort(500)
       else:
@@ -156,6 +156,7 @@ class PostHandler(object):
   def handleSaveDraft(self):
     qid = self.getQuestionnaireId()
     self.saveQuestionnaireAnswers(qid)
+    logging.debug("Questionnaire ID: %s saved as draft", qid)
     logging.critical(self.app.config['MAIL_BODY_DRAFT'])
     msg = "This questionnaire (" + qid + ") has been saved as draft."
     return '{\"csrf\":\"' + self.csrf_token + \
@@ -167,6 +168,7 @@ class PostHandler(object):
     qid = self.getQuestionnaireId()
     self.saveQuestionnaireAnswers(qid)
     self.updateQuestionnaireId()
+    logging.debug("Questionnaire ID: %s submitted", qid)
     logging.critical(self.app.config['MAIL_BODY_SUBMITTED'])
     msg = "Congratulations! This questionnaire (" + qid + ") has been submitted."
     return '{\"csrf\":\"' + self.csrf_token + \
@@ -191,7 +193,7 @@ class PostHandler(object):
   def getQuestionnaireId(self):
     """Gets the questionnaireId from the request"""
     qid = request.form['id']
-    session['qid'] = qid if qid.isalnum() else self.Id
+    session['qid'] = qid if qid is not None and qid.isalnum() else self.Id
     if session['qid'] == "":
       session['qid'] = self.Id
     return session['qid']
@@ -302,14 +304,9 @@ class PostHandler(object):
     contents = ''
     app = current_app
     dbHelper = dbUtils()
-    statusDict = {'ars': ('Approved', 'In Review', 'Submitted'), \
-            'rs': ('In Review', 'Submitted', ''), \
-            'ar': ('In Review', 'Approved', ''), \
-            'as': ('Submitted', 'Approved', ''), \
-            'a': ('Approved','',''), \
-            'r': ('In Review','','') }
+
     if qid is None or qid == "":
-      status = statusDict.get(searchType, ('Submitted','',''))
+      status = self._getStatusDict(searchType).get("status", ('Submitted','','','',''))
       rows = dbHelper.fetchForSubmissionsStatus(status)
     else:
       rows = dbHelper.loadPreviousRevisions(qid)
@@ -318,22 +315,33 @@ class PostHandler(object):
       return contents
     return '{}'
 
+  def _getStatusDict(self, input):
+    statusDict = { "status":[]}
+    statusList = ('Approved', 'In Review', 'Submitted', "Draft")
+    counter = 0
+    if input is not None and len(input) <= 4:
+      input = str(input)
+      for ch in ['a','r','s','d']:
+        if ch in input:
+          statusDict["status"].append(statusList[counter])
+        else:
+          statusDict["status"].append('')
+        counter = counter + 1
+    return statusDict
+
   def updateValues(self, values):
     """Updates objects(values) that may have been posted based on certain conditions"""
     updatedValues = values.copy()
-    if request.path == "/submit":
+    if request.path == "/submit" or request.path == "/savedraft":
       qid = session['qid']
       if not values.get('qid'):
         updatedValues['qid'] = qid
       if not values.get('q_version_0_1'):
         updatedValues['q_version_0_2'] = "checked"
-      updatedValues['app_status'] = "Submitted"
+      updatedValues['app_status'] = "Submitted" if request.path == "/submit" else "Draft"
       updatedValues['login_user'] = session.get('_user')
       updatedValues['login_userMail'] = session.get('_userMail')
       updatedValues['timestamp'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
-
-    if request.path == "/savedraft":
-      updatedValues['app_status'] = "Draft"
 
     if request.path == "/loadone":
       if values.get('qid'):
@@ -375,7 +383,7 @@ class PostHandler(object):
   def Id(self):
     """Gets a unique questionnaire ID"""
     if (request.path == '/submit' or request.path == '/savedraft'):
-      if session.get('qid') is not None and (session['qid']).isalnum() and len(session['qid']) == 12:
+      if session.get('qid') is not None and (session['qid']).isalnum() and len(session['qid']) == 12 and request.form.get('id', None) == session['qid']:
         qid = session['qid']
       else:
         session['qid'] = randomizer.Id()

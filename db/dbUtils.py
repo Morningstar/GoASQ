@@ -20,6 +20,7 @@ ANSWERS_TABLE = 'Answers'
 AUDIT_TABLE = 'Audit'
 ID_COLUMN = 'qid'
 ANSWER_COLUMN = 'answer'
+NAMESPACE = 'Morningstar:'
 
 class dbUtils(object):
 
@@ -31,10 +32,10 @@ class dbUtils(object):
     errCode = 0
     tid = ''
     pid = ''
-    if values.get('app_tid'):
-      tid = self._sanitizeInput(values.get('app_tid'))
-    if values.get('app_pid'):
-      pid = self._sanitizeInput(values.get('app_pid'))
+    if values.get(NAMESPACE+'app_tid'):
+      tid = self._sanitizeInput(values.get(NAMESPACE+'app_tid'))
+    if values.get(NAMESPACE+'app_pid'):
+      pid = self._sanitizeInput(values.get(NAMESPACE+'app_pid'))
     if timestamp_override is not None:
       timestamp = timestamp_override
     else:
@@ -104,7 +105,7 @@ class dbUtils(object):
       conn.close()
     return errCode
 
-  def updateStatus(self, qid, status):
+  def updateStatus(self, qid, status, user):
     """Handles a status update request."""
     errCode = 0
     reviewStatus = "In Review"
@@ -120,12 +121,15 @@ class dbUtils(object):
       if id_exists:
         answers = json.loads(id_exists[0])
         answers['app_status'] = reviewStatus
-        answers['timestamp'] = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
+        answers['timestamp'] = timestamp
         c.execute('''UPDATE {tn} \
           SET app_status = ?, \
-          answer = ? \
+          user_name = ?, \
+          answer = ?, \
+          timestamp = ? \
           WHERE {cn} = ? '''.\
-        format(tn=ANSWERS_TABLE, cn=ID_COLUMN), (reviewStatus, json.dumps(answers), self._sanitizeInput(qid)))
+        format(tn=ANSWERS_TABLE, cn=ID_COLUMN), (reviewStatus, user, json.dumps(answers), timestamp, self._sanitizeInput(qid)))
       else:
         errCode = 500
     except sqlite3.Error as e:
@@ -220,7 +224,7 @@ class dbUtils(object):
     rows = []
     try:
       c.execute('''SELECT qid, app_status, app_tid, app_pid, app_name, app_champion, app_team_email, user_name, timestamp, submitter_email, action_items FROM {tn} \
-        WHERE app_status in (?, ?, ?) order by timestamp desc'''.\
+        WHERE app_status in (?, ?, ?, ?) order by app_name asc, timestamp desc'''.\
         format(tn=ANSWERS_TABLE), \
         status)
       all_rows = c.fetchall()
@@ -325,6 +329,34 @@ class dbUtils(object):
       conn.close()
     return rows
 
+  def deleteSubmission(self, qid):
+    """Deletes an existing submission with given questionnaireID."""
+    qid = self._sanitizeInput(qid)
+    conn = sqlite3.connect(self.sqliteFile)
+    conn.text_factory = str
+    c = conn.cursor()
+    errCode = 500
+    questionnaireID = self._sanitizeInput(qid)
+    try:
+      c.execute('SELECT qid FROM {tn} WHERE {cn} = ? '.\
+        format(tn=ANSWERS_TABLE, cn=ID_COLUMN), (questionnaireID,))
+      id_exists = c.fetchone()
+      if id_exists:
+        c.execute('''DELETE FROM {tn} \
+          WHERE {cn} = ? '''.\
+        format(tn=ANSWERS_TABLE, cn=ID_COLUMN), (questionnaireID,))
+        conn.commit()
+        errCode = 0
+    except sqlite3.Error as e:
+      logging.error('dbUtils.deleteSubmission:SQLite Error while deleting for QID:' + str(questionnaireID) + ' :\n\n' + 
+        repr(e), exc_info=True)
+    except Exception as e:
+      logging.error('dbUtils.deleteSubmission:General exception deleting for QID:' + str(questionnaireID) + ' :\n\n' + 
+        repr(e), exc_info=True)
+    finally:
+      conn.close()
+    return errCode
+
   def findActionItems(self, answersDict):
     JIRA_REGEX = '[A-Z]{2,}-\d+'
     jira_issue_regex = re.compile(JIRA_REGEX)
@@ -338,7 +370,7 @@ class dbUtils(object):
             actionItems = JIRA
           else:
             actionItems = actionItems + "," + JIRA
-    logging.debug("All action items for QID: %s :%s", answersDict['qid'], str(actionItems))
+    logging.debug("All action items for QID: %s :%s", answersDict.get('qid','NA'), str(actionItems))
     return actionItems
 
   def _sanitizeInput(self, input):
