@@ -16,12 +16,12 @@ We are excited to work with the open source community to further enhance GoASQ s
 - [How has Morningstar benefited by using GoASQ?](#how-has-morningstar-benefited-by-using-goasq)
 - [How does GoASQ differ from VSAQ?](#how-does-goasq-differ-from-vsaq)
 - [Project Structure](#project-structure)
-- [Build Prerequisites](#build-rerequisites)
+- [Build Prerequisites](#build-prerequisites)
   - [Caveats](#caveats)
   - [Troubleshooting](#troubleshooting)
-  - [Installing python-ldap](#installing-python-ldap)
-    - [Debian/Ubuntu](#debian-ubuntu)
-    - [RedHat/CentOS](#redhat-centos)
+  - [Installing python-ldap](#installing-python-ldap-300)
+    - [Debian/Ubuntu](#debianubuntu)
+    - [RedHat/CentOS](#redhatcentos)
 - [Code Setup](#code-setup)
   - [Build](#build)
   - [Local Development Server](#local-development-server)
@@ -145,7 +145,7 @@ If installing python-ldap using pip doesn't work, see the alternatives below
 #### Debian/Ubuntu:
   `sudo apt-get install libsasl2-dev python-dev libldap2-dev libssl-dev`
 
-####RedHat/CentOS:
+#### RedHat/CentOS:
   `sudo yum install python-devel openldap-devel`
 
 * Download the package python-ldap-3.0.0 from https://pypi.python.org/pypi/python-ldap/3.0.0 (v3.0.0.tar.gz)

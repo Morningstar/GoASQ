@@ -17,3 +17,7 @@ templates.soy
 *.db
 *.out
 *.bak
+third_party/closure-compiler
+third_party/closure-library
+third_party/closure-stylesheets
+third_party/js-dossier
