@@ -410,6 +410,15 @@ form input {
     display: inline;
 }
 
+label.pk-import input[type="file"] {
+    position:absolute;
+    top: -1000px;
+}
+
+.pk-import {
+    display: inline-block;
+}
+
 input:required:invalid, input:focus:invalid {
     border: 1px solid red;
     -moz-box-shadow: none;

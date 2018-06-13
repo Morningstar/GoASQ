@@ -309,6 +309,7 @@ vsaq.Qpage.prototype.submitStatus_ = function(
             goog.dom.getElement("_app_status").innerText = "(Approved)";
           }
           alert('Status saved !');
+          location.reload();
         }
       }, this), 'POST', goog.string.format(
           'id=%s&_xsrf_=%s&s=%s', encodeURIComponent(id),
@@ -636,10 +637,6 @@ vsaq.Qpage.prototype.loadQuestionnaire = function(opt_path, opt_extension) {
               if (!this.isReadOnly && goog.structs.getCount(this.changes) > 0) {
                 goog.dom.setTextContent(this.statusIndicator,
                     'Changes pending...');
-                var saveBtn = goog.dom.getElement('_vsaq_export_questionnaire');
-                saveBtn.className = 'maia-button maia-button-disabled';
-                var submitBtn = goog.dom.getElement('_vsaq_submit_questionnaire');
-                submitBtn.className = 'maia-button eh-submit maia-button-disabled';
                 this.updateFields(this.changes);
               }
             }, this));
@@ -762,7 +759,9 @@ vsaq.initQuestionnaire = function() {
 vsaq.clearAnswers = function() {
   if (confirm('Are you sure that you want to delete all answers?')) {
     vsaq.resetQuestionnaire(true);
-    goog.dom.getElement("q_id").innerText = "";
+    goog.dom.getElement("q_id").innerText = "NOT-GENERATED";
+    vsaq.qpageObject_.questionnaireID = "NOT-GENERATED";
+    vsaq.qpageObject_.remoteQuestionnaireID = "NOT-GENERATED";
     var diffBtn = goog.dom.getElement('_vsaq_diff');
     diffBtn.className = 'maia-button eh-diff maia-button-disabled';
     var revisionsBtn = goog.dom.getElement('_vsaq_revisions');
@@ -785,6 +784,7 @@ vsaq.resetQuestionnaire = function(shouldInit) {
   goog.dom.getElement("answer_file").value = "";
   goog.dom.getElement("_app_status").innerText = "";
   if (shouldInit) {
+    vsaq.qpageObject_ = null;
     vsaq.initQuestionnaire();
   }
 }
@@ -824,12 +824,13 @@ vsaq.saveAnswersAsDraft = function() {
   if (!storageData) {
     return;
   }
-
-  vsaq.qpageObject_.submitQuestionnaireToServer_(
-    goog.dom.getElement('q_id').innerText, 
-    '/savedraft', 
-    goog.dom.getElement("_csrf_token").value
-    );
+  if (vsaq.checkRequiredFields() && vsaq.qpageObject_) {
+    vsaq.qpageObject_.submitQuestionnaireToServer_(
+      goog.dom.getElement('q_id').innerText, 
+      '/savedraft', 
+      goog.dom.getElement("_csrf_token").value
+      );
+  }
 };
 
 /**
@@ -842,14 +843,16 @@ vsaq.showToastbar = function(htmlContent, hide) {
     htmlContent = "This questionnaire is readonly. Please use the link at the bottom to <a class=\"js-signin-modal-trigger pk-main-nav__item\" data-signin=\"login\">Sign in</a> and edit/save."
   }
   var toastBar = document.getElementById("toastbar");
-  toastBar.innerHTML = htmlContent;
-  toastBar.className = hide? "" : "show";
-  if (!hide) {
-    setTimeout(function() {
-      toastBar.className = toastBar.className.replace("show", ""); 
-    }, 9500);
-  } else {
-    toastBar.className = ""; 
+  if (toastBar) {
+    toastBar.innerHTML = htmlContent;
+    toastBar.className = hide? "" : "show";
+    if (!hide) {
+      setTimeout(function() {
+        toastBar.className = toastBar.className.replace("show", ""); 
+      }, 9500);
+    } else {
+      toastBar.className = ""; 
+    }
   }
 };
 
@@ -862,21 +865,34 @@ vsaq.updateActionables = function() {
     var approveBtn = goog.dom.getElement('_vsaq_approve_questionnaire');
     var saveBtn = goog.dom.getElement('_vsaq_save_questionnaire');
     var submitBtn = goog.dom.getElement('_vsaq_submit_questionnaire');
+    var auth = goog.dom.getElement("_auth_").value == 'True' ? true : false;
     var storageData = vsaq.qpageObject_.readStorage_();
     if (storageData) {
       var storedValues = JSON.parse(storageData);
+      saveBtn.className = 'maia-button eh-save maia-button-disabled';
+      reviewBtn.className = 'maia-button eh-review maia-button-disabled';
+      approveBtn.className = 'maia-button eh-approve maia-button-disabled';
+      submitBtn.className = 'maia-button eh-submit maia-button-disabled';
       if (storedValues["app_status"] == "Revision") {
         vsaq.showToastbar("There is a more recent version of the answers that you can view by clicking on the \"Revisions\" button.");
-        reviewBtn.className = 'maia-button eh-review maia-button-disabled';
-        approveBtn.className = 'maia-button eh-approve maia-button-disabled';
-        saveBtn.className = 'maia-button eh-save maia-button-disabled';
-        submitBtn.className = 'maia-button eh-submit maia-button-disabled';
       } else {
         vsaq.showToastbar("", true);
-        reviewBtn.className = 'maia-button eh-review';
-        approveBtn.className = 'maia-button eh-approve';
-        saveBtn.className = 'maia-button eh-save';
-        submitBtn.className = 'maia-button eh-submit';
+        if (storedValues["app_status"] == "Draft") {
+          saveBtn.className = 'maia-button eh-save';
+          submitBtn.className = 'maia-button eh-submit';
+        } else if (storedValues["app_status"] == "In Review") {
+          submitBtn.className = 'maia-button eh-submit';
+          if (auth) {
+            approveBtn.className = 'maia-button eh-approve';
+          }
+        } else if (storedValues["app_status"] == "Approved" && auth) {
+          reviewBtn.className = 'maia-button eh-review';
+        } else if (storedValues["app_status"] == "Submitted") {
+          submitBtn.className = 'maia-button eh-submit';
+          if (auth) {
+            reviewBtn.className = 'maia-button eh-review';
+          }
+        }
       }
     }
   }
@@ -958,12 +974,15 @@ vsaq.checkRequiredFields = function() {
     var invalidTexts = document.querySelectorAll('html textarea:invalid');
     if (invalidInputs.length > 0) {
       invalidInputs[0].focus();
+      vsaq.showToastbar('Please fill in the required fields marked with red border.');
       return false;
     }
     if (invalidTexts.length > 0) {
       invalidTexts[0].focus();
+      vsaq.showToastbar('Please fill in the required fields marked with red border.');
       return false;
     }
+    vsaq.showToastbar("", true);
     return true;
 };
 
@@ -1023,6 +1042,9 @@ vsaq.fetchAllSubmissions = function(clickable, event) {
   var chkApproved = goog.dom.getElement('pk-checkbox-approved');
   chkApproved.checked = false;
   chkApproved.disabled = false;
+  var draft = goog.dom.getElement('pk-checkbox-draft');
+  draft.checked = false;
+  draft.disabled = false;
   vsaq.loadSubmissions();
 };
 
@@ -1054,10 +1076,12 @@ vsaq.updateCheckStates = function(shouldDisable) {
   var submitted = goog.dom.getElement('pk-checkbox-submitted');
   var inReview = goog.dom.getElement('pk-checkbox-in-review');
   var approved = goog.dom.getElement('pk-checkbox-approved');
+  var draft = goog.dom.getElement('pk-checkbox-draft');
   submitted.disabled = shouldDisable;
   inReview.disabled = shouldDisable;
   approved.disabled = shouldDisable;
-  return (approved.checked ? "a" : "") + (inReview.checked ? "r" : "") + (submitted.checked ? "s" : "");
+  draft.disabled = shouldDisable;
+  return (approved.checked ? "a" : "") + (draft.checked ? "d" : "") + (inReview.checked ? "r" : "") + (submitted.checked ? "s" : "");
 };
 
 /**
@@ -1085,6 +1109,9 @@ vsaq.loadRevisions = function(clickable, event) {
     var chkApproved = goog.dom.getElement('pk-checkbox-approved');
     chkApproved.checked = true;
     chkApproved.disabled = true;
+    var draft = goog.dom.getElement('pk-checkbox-draft');
+    draft.checked = true;
+    draft.disabled = true;
     submissionsModalHandler.showSubmissionsForm(event.target.getAttribute('data-submissions'));
     goog.dom.getElement('pk-inline-item-container').className = "hide";
     vsaq.qpageObject_.loadSubmissionsFromServer_(
