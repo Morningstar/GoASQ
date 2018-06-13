@@ -70,12 +70,15 @@ git submodule update
 
 # Pin submodules to particular commits
 cd closure-compiler
+git branch -d 59b42c9fc8fc752b3ff3aabe04ad89a96f9a7bf7
 git checkout -b 59b42c9fc8fc752b3ff3aabe04ad89a96f9a7bf7 59b42c9fc8fc752b3ff3aabe04ad89a96f9a7bf7
 cd ..
 cd closure-library
+git branch -d dc369cde87d7ef6dfb46d3b873f872ebee7d07cd
 git checkout -b dc369cde87d7ef6dfb46d3b873f872ebee7d07cd dc369cde87d7ef6dfb46d3b873f872ebee7d07cd
 cd ..
 cd js-dossier
+git branch -d 6f2d09ee26925b7417f9f6bd1547dffe700ab60f
 git checkout -b 6f2d09ee26925b7417f9f6bd1547dffe700ab60f 6f2d09ee26925b7417f9f6bd1547dffe700ab60f
 cd ..
 
@@ -115,3 +118,13 @@ curl https://raw.githubusercontent.com/google/closure-templates/0cbc8543c34d3f77
 cd ..
 
 cd ..
+echo "third_party/closure-library contents..."
+ls third_party/closure-library
+echo "third_party/closure-templates-compiler contents..."
+ls third_party/closure-templates-compiler
+echo "third_party/closure-stylesheets/target contents..."
+ls third_party/closure-stylesheets/target
+echo "third_party/closure-compiler/build contents..."
+ls third_party/closure-compiler/build
+echo "third_party/closure-compiler/contrib/externs contents..."
+ls third_party/closure-compiler/contrib/externs
