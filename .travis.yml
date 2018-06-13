@@ -1,0 +1,10 @@
+language: python
+python:
+  - 2.7.14
+install:
+  - pip install -r requirements-dev.txt
+  - ./do.sh install_deps
+  - ./do.sh check_deps
+script:
+  - ./do.sh clean
+  - ./do.sh build debug

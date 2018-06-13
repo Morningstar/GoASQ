@@ -515,7 +515,7 @@ goasq_applyKeyMappings() {
   PYTHON_FUNC_SECTIONS="import config_reader; print ' '.join(config_reader.getSections('"${CONFIG_PATH}"'))"
   sections=`$PYTHON_CMD -c "${PYTHON_FUNC_SECTIONS}"`
   index=0
-  CMD_REPLACE="sed -i .bak "
+  CMD_REPLACE="sed -i~ "
   for sec in ${sections}
   do
     sectionName="section"
@@ -526,8 +526,9 @@ goasq_applyKeyMappings() {
     do
       key="\[${i^^}\]"
       value="${section[$i]}"
+      echo ${CMD_REPLACE}"s|${key}|${value}|g" ${sec}
       ${CMD_REPLACE}"s|${key}|${value}|g" ${sec}
-      rm -rf ${sec}.bak
+      rm -rf ${sec}~
     done
     unset section
     ((index=index+1))

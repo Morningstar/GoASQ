@@ -2,6 +2,8 @@
 
 # GoASQ: General Open Architecture Security Questionnaire
 
+[![Build Status](https://travis-ci.org/Morningstar/GoASQ.svg?branch=master)](https://travis-ci.org/Morningstar/GoASQ)
+
 ## Introduction
 ----
 GoASQ is intended to be used as a part of an AppSec (Application Security) review process for applications before they are deployed to production. GoASQ is implemented in Javascript and Python and makes use of the Flask microservice engine.
