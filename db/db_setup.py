@@ -81,9 +81,9 @@ def importRecursivelyFromDirectory(sqlite_file=None, input_dir=None):
     if sqlite_file is None:
         sqlite_file = DB_FILE_PATH
     if input_dir is None or not os.path.exists(input_dir):
-        raise Exception("Input directory path does not exist:\n" + input_dir)
+        raise Exception("Input directory path does not exist:\n" + str(input_dir))
     if not os.path.exists(sqlite_file):
-        raise Exception("DB File does not exist:\n" + sqlite_file)
+        raise Exception("DB File does not exist:\n" + str(sqlite_file))
     root = input_dir
     current_dir_path = ""
     for root, directories, filenames in os.walk(input_dir):
@@ -117,6 +117,27 @@ def importRecursivelyFromDirectory(sqlite_file=None, input_dir=None):
                 print "WARNING: Failed loading from " + filePath
                 pass
 
+def deleteSubmission(sqlite_file=None, q_id=None):
+    if sqlite_file == "":
+        sqlite_file = None
+    if q_id == "":
+        q_id = None
+    if sqlite_file is None:
+        sqlite_file = DB_FILE_PATH
+    if q_id is None or not q_id.isalnum() or len(q_id) != 12:
+        raise Exception("Invalid Questionnaire ID:\n" + str(q_id))
+    if not os.path.exists(sqlite_file):
+        raise Exception("DB File does not exist:\n" + str(sqlite_file))
+    try:
+        dbHelper = dbUtils(sqlite_file)
+        errCode = dbHelper.deleteSubmission(q_id)
+        if errCode != 0:
+            print "WARNING: Failed deleting from DB for " + str(q_id)
+        else:
+            print "Deleting submission from DB for " + str(q_id)
+    except:
+        print "WARNING: Failed deleting from DB for " + str(q_id)
+        pass
 
 def restoreFromBackup(sqlite_file=None, input_dir=None):
     return "NOT YET IMPLEMENTED"

@@ -36,12 +36,12 @@ cd ${0%/*}
 
 vsaq_assert_dependencies() {
   # Check if required binaries are present.
-  type "$PYTHON_CMD" >/dev/null 2>&1 || { echo >&2 "Python is required to build VSAQ."; exit 1; }
-  type ant >/dev/null 2>&1 || { echo >&2 "Ant is required to build VSAQ."; exit 1; }
-  type java >/dev/null 2>&1 || { echo >&2 "Java is required to build VSAQ."; exit 1; }
+  type "$PYTHON_CMD" >/dev/null 2>&1 || { echo >&2 "Python is required to build GoASQ."; exit 1; }
+  type ant >/dev/null 2>&1 || { echo >&2 "Ant is required to build GoASQ."; exit 1; }
+  type java >/dev/null 2>&1 || { echo >&2 "Java is required to build GoASQ."; exit 1; }
   jversion=$(java -version 2>&1 | grep version | awk -F '"' '{print $2}')
   if [[ $jversion < "1.7" ]]; then
-    echo "Java 1.7 or higher is required to build VSAQ."
+    echo "Java 1.7 or higher is required to build GoASQ."
     exit 1
   fi
   # Check if required files are present.
@@ -272,6 +272,17 @@ goasq_restore_db() {
   goasq_applyKeyMappings $*
 }
 
+goasq_delete_submission() {
+  set -e
+  cd db
+  DB_PATH="$1"
+  QUESTIONNAIRE_ID="$2"
+  PYTHON_FUNC="import db_setup; db_setup.deleteSubmission('"${DB_PATH}"','"${QUESTIONNAIRE_ID}"')"
+  $PYTHON_CMD -c "${PYTHON_FUNC}"
+  RETVAL=$?
+  echo "Done."
+}
+
 goasq_prepare_local_launchpad() {
   set -e
   rm -rf "$LOCAL_LAUNCH_DIR"
@@ -300,6 +311,8 @@ goasq_prepare_local_launchpad() {
   sed 's/\/\/ .*$//g' build/questionnaires/mstar_0_1.json | sed 's/\/\/\\n.*$//g' | grep '[^[:blank:]]' | jq --arg title "${QUESTIONNAIRE_TITLE}" '.questionnaire[0].text |="\($title)"' >> ${JSON_QUESTIONNAIRE_PATH}
   echo "Copying requirements to be installed on target"
   cp *.txt "$LOCAL_LAUNCH_DIR"
+  rm -rf "${LOCAL_LAUNCH_DIR}/app.config.original.bak"
+  rm -rf "${LOCAL_LAUNCH_DIR}/app.config.debug.original.bak"
   RETVAL=$?
   echo "Local build done."
 }
@@ -481,7 +494,6 @@ goasq_autoBuildDebugOnly() {
 }
 
 goasq_copyConfigs() {
-  goasq_applyKeyMappings
   if [[ "${ROOT_DIR}" !=  "${WORKING_DIR}" ]]; then
     if [ ! -f "${WORKING_DIR}/app.config.original.bak" ]; then
       \cp -rf "${WORKING_DIR}/app.config" "${WORKING_DIR}/app.config.original.bak"
@@ -495,6 +507,7 @@ goasq_copyConfigs() {
       \cp -rf "${WORKING_DIR}/app.config.debug.original.bak" "${WORKING_DIR}/app.config.debug"
     fi
   fi
+  goasq_applyKeyMappings
 }
 
 goasq_applyKeyMappings() {
@@ -543,7 +556,7 @@ case "$CMD" in
     ;;
   build)
     vsaq_build $1 $2;
-    goasq_copyConfigs
+    goasq_copyConfigs $*;
     ;;
   build_prod)
     vsaq_build_prod;
@@ -564,6 +577,7 @@ case "$CMD" in
     vsaq_clean_deps;
     ;;
   run)
+    goasq_copyConfigs $*;
     vsaq_run $*;
     ;;
   lint)
@@ -588,6 +602,9 @@ case "$CMD" in
   restore_db)
     goasq_restore_db $*;
     ;;
+  delete_submission)
+    goasq_delete_submission $*;
+    ;;
   deploy)
     vsaq_build_prod;
     goasq_copyConfigs;
@@ -598,7 +615,12 @@ case "$CMD" in
   *)
     echo "Usage:   $0 PARAMETER"
     echo "Setup:   $0 {install_deps|check_deps|setup_db}"
+    echo ""
+    echo "Cleanup: $0 {clean|clean_deps}"
+    echo "         Removes the build directory | Deletes dependencies"
+    echo ""
     echo "Build:   $0 {build|build_prod|build_templates|build_docs} [debug]"
+    echo ""
     echo "Run:     $0 {run} [-v] [--debug or -d]"
     echo "         Not passing the -v or --verbose will default the log level to CRITICAL."
     echo "         More verbose levels in the same order can be set:"
@@ -608,11 +630,16 @@ case "$CMD" in
     echo "          Debug (-vvvvv)"
     echo ""
     echo "Data:    $0 {backup_db|bulkinsert_db|restore_db} [/path/to/DB/file.db] [/directory/path/for/input or output]"
-    echo "Cleanup: $0 {clean|clean_deps}"
+    echo "         creates a back up of the database | allows you to bulk insert from a specified directory | restores data"
+    echo ""
+    echo "Delete:  $0 {delete_submission} [/path/to/DB/file.db] [Questionnaire ID]"
+    echo "         Deletes a row with specified questionnaire ID from the database."
+    echo ""
     echo "Deploy:  $0 {deploy} [--debug][--test]"
     echo "         Builds the prod version of the application, creates DB"
     echo "         or leaves the existing DB as-is, if found, and attempts to deploy on a target box."
     echo "         optionally runs the server in debug and/or test mode"
+    echo ""
     echo "Other:   $0 {lint}"
     RETVAL=1
 esac

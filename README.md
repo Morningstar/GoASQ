@@ -10,6 +10,42 @@ GoASQ is a framework for building security questionnaires using a simple JSON fo
 
 We are excited to work with the open source community to further enhance GoASQ so it becomes a widely useful AppSec tool. Please join us and help to make GoASQ more functional, comprehensive and complete.
 
+## Table of Contents
+- [How do we use GoASQ](#how-do-we-use-goasq)
+- [Example Security Review Workflow](#example-security-review-workflow)
+- [How has Morningstar benefited by using GoASQ?](#how-has-morningstar-benefited-by-using-goasq)
+- [How does GoASQ differ from VSAQ?](#how-does-goasq-differ-from-vsaq)
+- [Project Structure](#project-structure)
+- [Build Prerequisites](#build-prerequisites)
+  - [Caveats](#caveats)
+  - [Troubleshooting](#troubleshooting)
+  - [Installing python-ldap](#installing-python-ldap-300)
+    - [Debian/Ubuntu](#debianubuntu)
+    - [RedHat/CentOS](#redhatcentos)
+- [Code Setup](#code-setup)
+  - [Build](#build)
+  - [Local Development Server](#local-development-server)
+  - [Deployment](#deployment)
+    - [Manual deployment](#manual-deployment)
+- [Login](#login)
+- [Session Management](#session-management)
+- [Logging](#logging)
+- [Exception handling](#exception-handling)
+- [Questionnaires](#questionnaires)
+- [E-mail notifications](#e-mail-notifications)
+- [Security Headers](#security-headers)
+- [Runtime Application Self Protection](#runtime-application-self-protection)
+  - [User session termination](#user-session-termination)
+  - [Alerting administrators](#alerting-administrators)
+  - [Rate limiting and user warning](#rate-limiting-and-user-warning)
+- [Notes](#notes)
+- [Features](#features)
+- [TODO](#todo)
+- [Contributions](#todo)
+  - [Code reviews](#code-reviews)
+- [License](#license)
+--------
+
 ### How do we use GoASQ?
 
 Project teams use the GoASQ questionnaire(s) to describe the architecture and security posture of their code. When answers indicate a bad security practice, the questionnaire automatically highlights this, provides best practice advice, and asks if there is any justification for deviating from best practice.

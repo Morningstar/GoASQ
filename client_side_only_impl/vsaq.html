@@ -51,10 +51,6 @@
       </div>
       <div class="maia-col-12">
         <div class="main-content">
-          <p>
-            Load answers from a file you have saved on your computer:
-            <input type="file" id="answer_file"/><br />
-          </p>
           <form id="postdata">
             <input type="hidden" name="_rom_" id="_rom_" value="{{readonly()|lower}}">
             <input type="hidden" name="draft" id="draft" value="false">
@@ -88,22 +84,23 @@
             </div>
             <div class="box-container">
               <div class="box">
+                <a class="maia-button eh-submissions js-submissions-modal-trigger" id="_vsaq_all_submissions" data-submissions="submissions">GoASQ TOC</a>
+                <label class="pk-import"><input type="file" id="answer_file" /><a class="maia-button">Import</a></label>
                 <a class="maia-button" id="_vsaq_export_questionnaire">Export</a>
                 <a class="maia-button eh-clear" id="_vsaq_clear_questionnaire">Reset</a>
                 <a class="maia-button eh-save" id="_vsaq_save_questionnaire">Save</a>
-                <a class="maia-button eh-submit" id="_vsaq_submit_questionnaire">Submit</a>
               </div>
               <input name=_csrf_token id='_csrf_token' type=hidden value="{{ csrf_token() }}">
               <div class="box">
+                <a class="maia-button eh-submit" id="_vsaq_submit_questionnaire">Submit</a>
                 <input type="text" name="search_qid" id="search_qid" size="20" margin="5" placeholder="Application metadata" /><a class="maia-button eh-load" id="_vsaq_search_questionnaire">I'm Feeling Lucky</a>
               </div>
               <div class="box">
-                <a class="maia-button eh-submissions js-submissions-modal-trigger" id="_vsaq_all_submissions" data-submissions="submissions">All Submissions</a>
                 <a class="maia-button eh-revisions maia-button-disabled js-submissions-modal-trigger" id="_vsaq_revisions" data-submissions="submissions">Revisions</a>
                 <a class="maia-button eh-diff maia-button-disabled" id="_vsaq_diff">Diff</a>
               </div>
               <div class="box">
-                <a class="maia-button eh-review maia-button-disabled" id="_vsaq_review_questionnaire">Finish Review</a>
+                <a class="maia-button eh-review maia-button-disabled" id="_vsaq_review_questionnaire">Accepted</a>
                 <a class="maia-button eh-approve maia-button-disabled" id="_vsaq_approve_questionnaire">Approve</a>
               </div>
             </div>
@@ -169,17 +166,19 @@
           <label for="pk-checkbox-in-review" class="pk-inline-label">In Review</label>
           <input type="checkbox" id="pk-checkbox-approved" name="pk-checkbox-approved" value="a" class="pk-inline-input eh-submissionCheckChanged">
           <label for="pk-checkbox-approved" class="pk-inline-label">Approved</label>
+          <input type="checkbox" id="pk-checkbox-draft" name="pk-checkbox-draft" value="d" class="pk-inline-input eh-submissionCheckChanged">
+          <label for="pk-checkbox-draft" class="pk-inline-label">Draft</label>
       </div>
         <p class="pk-submissions-modal__fieldset">
           <input type="text" id="pk-metadataSearchInput" class="pk-metadataSearchInput" placeholder="Begin typing to filter results.." />
           <table id="pk-metadataTable">
             <tr class="pk-header">
-              <th style="width:9%;">QID / Rev</th>
+              <th style="width:10%;">QID / Rev</th>
               <th style="width:6%;">Status</th>
               <th style="width:10%;">Project</th>
               <th style="width:10%;">[TEAM_CONTACT]</th>
               <th style="width:16%;">Team E-mail</th>
-              <th style="width:5%;">[TEAM_IDENTIFIER_LABEL]</th>
+              <th style="width:4%;">[TEAM_IDENTIFIER_LABEL]</th>
               <th style="width:5%;">[PROJECT_IDENTIFIER_LABEL]</th>
               <th style="width:6%;">Updated</th>
               <th style="width:8%;">Timestamp</th>
