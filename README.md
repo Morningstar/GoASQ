@@ -145,7 +145,7 @@ If installing python-ldap using pip doesn't work, see the alternatives below
 #### Debian/Ubuntu:
   `sudo apt-get install libsasl2-dev python-dev libldap2-dev libssl-dev`
 
-####RedHat/CentOS:
+#### RedHat/CentOS:
   `sudo yum install python-devel openldap-devel`
 
 * Download the package python-ldap-3.0.0 from https://pypi.python.org/pypi/python-ldap/3.0.0 (v3.0.0.tar.gz)
