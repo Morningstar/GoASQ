@@ -23,7 +23,7 @@ from threading import Thread
 class BufferingSMTPHandler(logging.handlers.BufferingHandler):
     def __init__(self, mailhost, fromaddr, toaddrs, subject, capacity,
                  logging_format, mailbody, files=[], sendAttachments=False, 
-                 identifier=None, callback=None):
+                 identifier=None, callback=None, threadapp=None, threadsharedSession=None):
         logging.handlers.BufferingHandler.__init__(self, capacity)
         self.mailhost = mailhost
         self.mailport = None
@@ -38,6 +38,8 @@ class BufferingSMTPHandler(logging.handlers.BufferingHandler):
         self.identifier = identifier
         self.identity = ''
         self.setFormatter(logging.Formatter(logging_format))
+        self.threadapp = threadapp
+        self.threadsharedSession = threadsharedSession
 
     def flush(self):
         if len(self.buffer) > 0:
@@ -99,7 +101,7 @@ class BufferingSMTPHandler(logging.handlers.BufferingHandler):
     @property
     def emailSubject(self):
         if callable(self.subject):
-            subject = self.subject(self.identity)
+            subject = self.subject(self.identity, self.threadapp, self.threadsharedSession)
         else:
             subject = self.subject
         return subject
@@ -112,7 +114,7 @@ class BufferingSMTPHandler(logging.handlers.BufferingHandler):
                 s = self.format(record)
                 msg_body += s + "\r\n"
             if msg_body != "" and callable(self.mailbody):
-                    msg_body = self.mailbody(msg_body, self.identity)
+                msg_body = self.mailbody(msg_body, self.identity, self.threadapp, self.threadsharedSession)
         return msg_body
 
     @property

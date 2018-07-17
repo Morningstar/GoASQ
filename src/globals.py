@@ -17,6 +17,7 @@ from smtp_handler import ThreadedSMTPHandler
 from flask import current_app, request, session
 from logging import Formatter
 from logging.handlers import RotatingFileHandler
+import traceback
 
 sharedSession = {}
 
@@ -109,6 +110,7 @@ def setup_Logging(app=None):
 
 def setup_Notification_For_Errors(app=None):
   if not app.config['DEBUG']:
+    global sharedSession
     admins = app.config['SERVER_ADMINS']
     logging_format = '''
     Message type:       %(levelname)s
@@ -129,12 +131,15 @@ def setup_Notification_For_Errors(app=None):
                                logging_format=logging_format,
                                mailbody='',
                                files=[],
-                               sendAttachments=False)
+                               sendAttachments=False,
+                               threadapp = app,
+                               threadsharedSession = sharedSession)
     mail_handler.setLevel(logging.ERROR)
     logging.getLogger().addHandler(mail_handler)
     logging.info('Mail handler (Errors) set.')
 
 def setup_Notification_For_Reviews(app=None):
+  global sharedSession
   reviewers = app.config['REVIEWERS']
   logging_format = '%(message)s'
   mail_handler = ThreadedSMTPHandler(mailhost=app.config['MAIL_SERVER_INTERNAL'],
@@ -147,27 +152,26 @@ def setup_Notification_For_Reviews(app=None):
                              files=get_attachments,
                              sendAttachments=app.config['MAIL_SEND_ATTACHMENT'],
                              identifier=get_mail_identity, 
-                             callback=mail_job_finished)
+                             callback=mail_job_finished,
+                             threadapp = app,
+                             threadsharedSession = sharedSession)
   mail_handler.setLevel(logging.CRITICAL)
   logging.getLogger().addHandler(mail_handler)
   logging.info('Mail handler (Reviews) set.')
 
-def mail_subject(qid):
-  app = current_app
+def mail_subject(qid, app, sharedSession):
   try:
-    global sharedSession
     return (app.config['MAIL_SUBJECT']).format(qid, sharedSession.get(qid+'_app_name'))
   except:
     return ''
 
-def mail_body(record, qid):
-  app = current_app
+def mail_body(record, qid, app, sharedSession):  
   try:
-    global sharedSession
     host = app.config['HOST_HOME_URL'];
     return record.format(host, qid, qid,
       sharedSession.get(qid+'_app_documentation'), sharedSession.get(qid+'_userFullName'))
-  except:
+  except Exception as e:
+    logging.debug("Exception, %s, StackTrace", e, traceback.format_exc())
     return ''
 
 def get_sender_email(qid):
