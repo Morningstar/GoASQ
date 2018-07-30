@@ -84,6 +84,8 @@ ERROR_DIGEST_CAPACITY = 10
 # Email notifications about submissions
 REVIEWERS = ['YourSecurityTeam@example.com']
 REVIEWERS_AD_GROUP = 'CN=Security Team,OU=My Cool OU,OU=Common,OU=My Cool OU,DC=example,DC=com'
+REVIEWERS_ADDITIONAL = ['', '']
+
 MAIL_SEND_ATTACHMENT = True
 MAIL_SUBJECT = 'QID: {} : Security Architecture Review for project: {}'
 MAIL_BODY_DRAFT = 'Hi there,<br /><br />Please note that your answers for questionnaire ID: <a href="{}{}">{} </a> have been saved as <b>draft</b>. This has <b>NOT</b> been submitted yet. Please answer any remaining question(s) and submit it soon. Feel free to share this e-mail with your colleagues and have them submit with answers to all questions.<br />{}{}<br />Thanks,<br />Security Team<br /><br />(This is an auto-generated email by [APPLICATION_TITLE])'

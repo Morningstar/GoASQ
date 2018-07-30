@@ -59,6 +59,7 @@ if [ ! -d $THIRD_PARTY_DIRECTORY ]; then
 fi
 cd $THIRD_PARTY_DIRECTORY
 
+git init
 git submodule add -f https://github.com/google/closure-compiler closure-compiler
 git submodule add -f https://github.com/google/closure-library closure-library
 git submodule add -f https://github.com/google/closure-stylesheets closure-stylesheets
@@ -100,7 +101,7 @@ fi
 if [ ! -f closure-stylesheets/target/closure-stylesheets.jar ]; then
   cd closure-stylesheets
   mvn compile assembly:single
-  mv ./target/closure-stylesheets-1.5.0-SNAPSHOT-jar-with-dependencies.jar ./target/closure-stylesheets.jar
+  mv ./target/closure-stylesheets-1.6.0-SNAPSHOT-jar-with-dependencies.jar ./target/closure-stylesheets.jar
   cd ..
 fi
 

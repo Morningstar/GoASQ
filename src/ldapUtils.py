@@ -68,12 +68,31 @@ class LDAPServer(object):
         repr(e), exc_info=True)
       return userDetails
     rawDict = ast.literal_eval(str(result[0]))[1]
+
+    
     data = { k: v for k, v in rawDict.iteritems() }
     userDetails['t'] = data.get('title')[0]
     userDetails['m'] = data.get('mail')[0]
     userDetails['u'] = data.get('name')[0]
+    
+    logging.debug("Print the data start")
+    for key,val in data.items():
+      logging.debug("data item: key: {} value {}".format(key, val))
+    logging.debug("Print the data end")
+
     if self.app.config['REVIEWERS_AD_GROUP'] in data.get('memberOf'):
+      logging.info("Get the review approved in the REVIEWS AD Group.")
       userDetails['a'] = True
+    
+    acctName = data.get("sAMAccountName")[0]
+    logging.debug("Account Name {}".format(acctName))
+    for reviewer in self.app.config['REVIEWERS_ADDITIONAL']:
+        logging.debug("Reviewer: {}".format(reviewer))
+
+    if acctName in self.app.config['REVIEWERS_ADDITIONAL']:
+      logging.info("Get the review approved in the REVIEWS ADDITIONAL LIST.")
+      userDetails['a'] = True
+    
     return userDetails
 
   def disconnect(self):
