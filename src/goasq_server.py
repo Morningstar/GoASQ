@@ -38,7 +38,7 @@ renderer = Renderer(app)
 postHandler = PostHandler(app)
 
 class ServerRequestHandler(MethodView):
-  """Request handler for EGS server."""
+  """Request handler for GoASQ server."""
 
   def get(self, pathParam):
     logging.debug("ServerRequestHandler.get:%s, pathParam:%s", request.remote_addr, pathParam);

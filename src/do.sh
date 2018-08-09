@@ -167,7 +167,7 @@ vsaq_build() {
   if [ "$1" == "debug" ]; then
     echo "Debug mode enabled"
   fi
-  if [ ! -f "${BUILD_DIR}/db/EGS.db" ]; then
+  if [ ! -f "${BUILD_DIR}/db/GoASQ.db" ]; then
     goasq_setup_db
   fi
 
@@ -223,8 +223,8 @@ goasq_setup_db() {
   set -e
   BUILD_DIR_DB="$BUILD_DIR/db"
   mkdir -p "$BUILD_DIR_DB"
-  if [ -f "$BUILD_DIR_DB/EGS.db" ]; then
-    read -p $'\e[31mEGS.db database file already exists in build/db. Do you want to remove it and create a new DB ? (y/n)\e[0m: '  removeDBFile
+  if [ -f "$BUILD_DIR_DB/GoASQ.db" ]; then
+    read -p $'\e[31mGoASQ.db database file already exists in build/db. Do you want to remove it and create a new DB ? (y/n)\e[0m: '  removeDBFile
     if [ $removeDBFile == 'y' ] || [ $removeDBFile == 'Y' ]; then
       echo "Cleaning existing DB file..."
     elif [ $removeDBFile == 'n' ] || [ $removeDBFile == 'N' ]; then
@@ -340,13 +340,13 @@ goasq_prepare_remote_launchpad() {
   getRemoteDBFile=""
   read -p $'\e[31mWould you like to use the existing DB, if any, in the target deployment location ? (y/n)\e[0m: '  keepDBFile
   if [ "$keepDBFile" == "y" ] || [ "$keepDBFile" == "Y" ]; then
-    getRemoteDBFile="get ${remoteHomeDirectory}/build/db/EGS.db ${PWD}/${LOCAL_LAUNCH_DIR}/build/db/EGS.db"
-    echo "If a DB file exists at ${remoteHomeDirectory}/build/db/EGS.db, it will be kept as-is."
+    getRemoteDBFile="get ${remoteHomeDirectory}/build/db/GoASQ.db ${PWD}/${LOCAL_LAUNCH_DIR}/build/db/GoASQ.db"
+    echo "If a DB file exists at ${remoteHomeDirectory}/build/db/GoASQ.db, it will be kept as-is."
   elif [ "$keepDBFile" != "n" ] && [ "$keepDBFile" != "N" ]; then
     echo $'\e[31mERROR: A valid input (y/n) is required.\e[0m'
     exit 1
   else
-    echo "If a DB file exists at ${remoteHomeDirectory}/build/db/EGS.db, it will be deleted and a new DB file will be created."
+    echo "If a DB file exists at ${remoteHomeDirectory}/build/db/GoASQ.db, it will be deleted and a new DB file will be created."
   fi
   read -p $'\e[31mWould you like to kill any server process running on port 80 and restart it with new deployment? (default No [n]) (y/n)\e[0m: '  killServer
   if [ "$killServer" == "y" ] || [ "$killServer" == "Y" ]; then
