@@ -18,8 +18,8 @@ from dbUtils import dbUtils
 
 ADMIN_USER = "pjha"
 ADMIN_USER_EMAIL = "praveen.jha@morningstar.com"
-DB_FILE_PATH = "../build/db/EGS.db"
-DB_BACKUP_FILENAME = "DB_Backup_EGS"
+DB_FILE_PATH = "../build/db/GoASQ.db"
+DB_BACKUP_FILENAME = "DB_Backup_GoASQ"
 INDEX_ANSWERS = "AnswersIndex.txt"
 TABLE_ANSWERS_SCHEMA = "Answers.txt"
 TABLE_AUDIT_SCHEMA = "Audit.txt"

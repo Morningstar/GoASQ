@@ -431,7 +431,7 @@ vsaq_run() {
   else
     export APP_SETTINGS='app.config'
     echo "Starting the GOASQ server as a background process..."
-    $PYTHON_CMD goasq_server.py $* &>Logs/EGS.log &
+    $PYTHON_CMD goasq_server.py $* &>Logs/GoASQ.log &
     disown -h %1
   fi
   echo "Done."

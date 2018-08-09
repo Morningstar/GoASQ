@@ -126,7 +126,7 @@ def setup_Notification_For_Errors(app=None):
     mail_handler = ThreadedSMTPHandler(mailhost=app.config['MAIL_SERVER_INTERNAL'],
                                fromaddr=app.config['MAIL_SENDER'],
                                toaddrs=admins, 
-                               subject='Application failure for EGS',
+                               subject='Application failure for GoASQ',
                                capacity=app.config['ERROR_DIGEST_CAPACITY'],
                                logging_format=logging_format,
                                mailbody='',

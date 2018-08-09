@@ -186,7 +186,7 @@ To setup database for the first time, run the following command from the {projec
 1. ./do.sh setup_db
 
 Please note that you should be running this command in the capacity of the same user that you'd run the server with.
-Alternatively, use `chown` to own the database file - EGS.db - created under `build\db\`.
+Alternatively, use `chown` to own the database file - GoASQ.db - created under `build\db\`.
 
 To bulk insert a bunch of answers and their revisions that you may have saved into a directory, run the following command from the {project root directory}/src:
 1. ./do.sh bulkinsert_db [/path/to/DB/file.db] [/directory/path/for/input]
@@ -232,7 +232,7 @@ Alternatively, you can also follow the instructions below for manual deployment.
 1. To setup database for the first time, run the following command from the {project root directory}/src:
   `./do.sh setup_db`
   If the database already exists, you will need to copy that to the target directory under 
-  `[server root directory]/build/db/EGS.db`
+  `[server root directory]/build/db/GoASQ.db`
 1. `./do.sh build_prod` : This will run a normal build, but will also remove test files. This will also replace all placeholder strings from various files as defined in placeholders.compile.cfg
 1. Copy the `build` directory into the target directory hosted on your web server.
 1. Run the command from target root directory to generate a self signed certificate and key
@@ -248,7 +248,7 @@ Alternatively, you can also follow the instructions below for manual deployment.
   `[root directory]`
   `[root directory]\app.config` or `app.config.debug` if you build for debug environment.
   `[root directory]\build\* [contents after building (build_prod)]`
-  `[root directory]\build\db\EGS.db (This gets here after running the DB setup for the first time or you copying an existing DB.)`
+  `[root directory]\build\db\GoASQ.db (This gets here after running the DB setup for the first time or you copying an existing DB.)`
   `[root directory]\cert.pem`
   `[root directory]\compiler.flags`
   `[root directory]\cryptoUtils.py`

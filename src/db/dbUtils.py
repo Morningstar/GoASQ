@@ -15,7 +15,7 @@ import datetime, json, logging, re, sqlite3, time
 
 from flask import request, session
 
-SQLITE_FILE = "build/db/EGS.db"
+SQLITE_FILE = "build/db/GoASQ.db"
 ANSWERS_TABLE = 'Answers'
 AUDIT_TABLE = 'Audit'
 ID_COLUMN = 'qid'
