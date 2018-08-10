@@ -7,7 +7,6 @@ src/flask/
 src/Logs/
 src/uploads/
 src/LocalLaunchPad/
-templates.soy
 *.pyc
 
 # Others
