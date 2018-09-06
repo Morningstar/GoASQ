@@ -28,7 +28,7 @@
             {
               "type": "info",
               "id": "intro_1",
-              "text": "The Project [PROJECT_SECURITY_CHAMPION_CONTACT_DOCUMENTATION_HREF] is responsible for filling out this questionnaire for the projects that they are responsible.  Export your answers to a JSON file using the \"Export\" button at the bottom of the questionnaire.  You can load previously exported answers using the \"Import\" button at the top of the questionnaire to review or make changes to answers. Save your answers as draft by clicking the \"Save\" button if you choose to come back to answering remaining part of the questionnaire later or wish to share the saved draft by sharing the questionnaireID with other members of your team so they can assist answering the remaining part. Reviewers will review your answers after the answers are submitted and they \"Finish Review\". When the reviewers are satisfied with your answers, they will mark the review \"Approved\"."
+              "text": "The Project [PROJECT_SECURITY_CHAMPION_CONTACT_DOCUMENTATION_HREF] is responsible for filling out this questionnaire for the projects that they are responsible.  You may use the \"Save\" button to save answers before submission. You can find previously saved questionnaires by pressing the \"GoASQ TOC\" button. When completed, please click the \"Submit\" button. This will trigger an email to the AppSec team to start review and the person submitting the questionnaire should also be cc:ed on this email. You should receive a response within a few days. Please send an email to [ORGANIZATION_APPSEC_EMAIL_HREF] if you need help, have any quesetions or if you do not receive a timely response."
             },
             {
               "type": "info",
