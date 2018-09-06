@@ -33,23 +33,12 @@
             {
               "type": "info",
               "id": "intro_2",
-              "text": "Note that the \"Export\"  button <b>does not work</b> with the IE (Internet Explorer) browser, so please use a modern browser like Chrome, Firefox or Edge."
+              "text": "Note that the \"Export\" button <b>does not work</b> with the IE (Internet Explorer) browser, so please use a modern browser like Chrome, Firefox or Edge."
             },
             {
               "type": "info",
               "id": "intro_5",
               "text": "Note that each section of the questionnaire has an associated number.  Some sections of the questionnaire only display based on answers provided, so it is common for completed questionnaires to skip some sections or subsections.  Comments about questions will typically reference these section numbers. Fields with a red border are mandatory application metadata that you must fill out."
-            },
-            {
-              "type": "radiogroup",
-              "insertAfter": "intro_5",
-              "text": "Load this questionnaire in compatibility mode with version:",
-              "defaultChoice": false,
-              "id": "q_version",
-              "choices": [
-                {"q_version_0_1": "0.1 (Useful when you want to load and review the answers you may have provided in the past)"},
-                {"q_version_0_2": "0.2 (Latest)"}
-              ]
             }
           ]
         },
@@ -68,14 +57,14 @@
                   "text": "Application name:",
                   "id": "app_name",
                   "required": true,
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]"
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]"
                 },
                 {
                   "type": "line",
                   "text": "Project Security Champion:",
                   "id": "app_champion",
                   "required": true,
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]"
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]"
                 },
                 {
                   "type": "radiogroup",
@@ -97,12 +86,12 @@
                   "type": "line",
                   "text": "Name of person filling out the questionnaire:",
                   "id": "app_author",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_questionnaire_security_champion_no"
                 },
                 {
                   "type": "radiogroup",
-                  "text": "Confirm the person filling out the form, the project Security Champion and the project Technical Lead have read and understood the [ORGANIZATION_SECURITY_POLICIES_HREF] and the [PROJECT_SECURITY_CHAMPION_CONTACT_DOCUMENTATION_HREF] Responsibilities ?  Note that for some teams the role of Security Champion and Technical Lead may be taken up by the same person.",
+                  "text": "Confirm the person filling out the form, the project Security Champion and the project Technical Lead have read and understand the [ORGANIZATION_SECURITY_POLICIES_HREF] and the [PROJECT_SECURITY_CHAMPION_CONTACT_DOCUMENTATION_HREF] Responsibilities?  Note that for some teams the role of Security Champion and Technical Lead may be taken up by the same person.",
                   "id": "app_champion_confirm",
                   "choices": [
                     {"app_champion_confirmed": "Confirmed"},
@@ -130,8 +119,17 @@
                   "type": "line",
                   "text": "Project team contact email address:",
                   "required": true,
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "id": "app_team_email"
+                },
+                {
+                  "type": "radiogroup",
+                  "text": "Does this project have SOC2 compliance requirements?",
+                  "id": "app_soc",
+                  "choices": [
+                    {"app_soc_yes": "Yes"},
+                    {"app_soc_no": "No"}
+                  ]
                 }
               ]
             },
@@ -154,7 +152,7 @@
                   "type": "line",
                   "text": "Additional deployments:",
                   "cond": "app_deploy_other",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "id": "app_deploy_other_detail"
                 },
                 {
@@ -163,6 +161,26 @@
                   "name": "AWS Coding Standards",
                   "cond": "app_deploy_aws",
                   "id": "warn_app_deploy"
+                },
+                {
+                  "type": "checkgroup",
+                  "text": "Describe the application type:",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"app_project_type_WebApp": "Web application (this is accessed through a web browser)"},
+                    {"app_project_type_WebServices": "Web services (this is a SOAP or REST web services application)"},
+                    {"app_project_type_server_generic": "Server side of a generic client-server application (a server side app, where the client is not a web browser)"},
+                    {"app_project_type_mobile_app": "Mobile (phone/tablet) application (a mobile application that relies on a remote server/services for its operations)"},
+                    {"app_project_type_standalone": "Stand-alone project (a stand-alone client or desktop application)"},
+                    {"app_project_type_not_defined": "None of the above"}
+                  ]
+                },
+                {
+                  "type": "line",
+                  "text": "Please describe the application type:",
+                  "cond": "app_project_type_not_defined",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
+                  "id": "app_project_type_not_defined_details"
                 },
                 {
                   "type": "checkgroup",
@@ -179,35 +197,14 @@
                   "text": "Briefly describe the significant changes.",
                   "cond": "app_project_significant_change",
                   "id": "app_project_significant_change_detail",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]"
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]"
                 },
                 {
                   "type": "box",
                   "text": "Please describe what security features changed and how the security landscape has changed.",
                   "cond": "app_project_security_change",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "id": "app_project_security_change_detail"
-                },
-                {
-                  "type": "checkgroup",
-                  "text": "Describe the application type:",
-                  "defaultChoice": false,
-                  "choices": [
-                    {"app_project_type_WebApp": "Web application (this is accessed through a web browser)"},
-                    {"app_project_type_WebServices": "Web services (this is a SOAP or REST web services application)"},
-                    {"app_project_type_server_generic": "Server side of a generic client-server application (a server side app, where the client is not a web browser)"},
-                    {"app_project_type_mobile_app": "Mobile (phone/tablet) application (a mobile application that relies on a remote server/services for its operations)"},
-                    {"app_project_type_standalone": "Stand-alone project (a stand-alone client or desktop application)"},
-                    {"app_project_type_no_code": "The project does not involve any code"},
-                    {"app_project_type_not_defined": "None of the above"}
-                  ]
-                },
-                {
-                  "type": "line",
-                  "text": "Please describe the application type:",
-                  "cond": "app_project_type_not_defined",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
-                  "id": "app_project_type_not_defined_details"
                 },
                 {
                   "type": "radiogroup",
@@ -219,28 +216,18 @@
                   ]
                 },
                 {
-                  "type": "box",
-                  "text": "Please describe how network interfaces are used and provide some description of data flow:",
-                  "cond": "app_network_interfaces_yes",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
-                  "id": "app_network_interfaces_detail"
-                },
-                {
-                  "type": "radiogroup",
-                  "text": "Does the project provide content that is intended to be viewed directly in a web browser.  For example, does your project control HTML/CSS content, headers, cookies, or client-side browser code like Javascript?",
-                  "id": "app_web_browser",
-                  "cond": "app_network_interfaces_yes && (app_project_type_mobile_app || q_version_0_1)",
-                  "choices": [
-                    {"app_web_browser_yes": "Yes"},
-                    {"app_web_browser_no": "No"}
-                  ]
-                },
-                {
                   "type": "tip",
                   "text": "Be familiar with <b>internet interface</b> security concerns.  Please review the <a href=\"https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project\">OWASP Top 10</a> and the <a href=\"https://wiki.mozilla.org/WebAppSec/Secure_Coding_Guidelines\">Mozilla WebAppSec Secure Coding Guidelines</a> and the <a href=\"https://google.github.io/styleguide/htmlcssguide.html\">Google HTML/CSS Style Guide</a>.  Work with developers on the project team developing network interfaces to ensure such standards are understood and followed.",
                   "name": "Web Coding Standards",
                   "cond": "app_network_interfaces_yes",
                   "id": "warn_app_coding_standards_web"
+                },
+                {
+                  "type": "box",
+                  "text": "Please describe how network interfaces are used and provide some description of data flow:",
+                  "cond": "app_network_interfaces_yes",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "id": "app_network_interfaces_detail"
                 },
                 {
                   "type": "radiogroup",
@@ -250,6 +237,34 @@
                   "choices": [
                     {"app_internet_facing_yes": "Yes"},
                     {"app_internet_facing_no": "No"}
+                  ]
+                },
+                {
+                  "type": "radiogroup",
+                  "text": "Does this project have any [PROJECT_UNRESOLVED_BUGS_HREF]</a>?",
+                  "id": "app_high_or_critical_issues",
+                  "choices": [
+                    {"app_high_or_critical_issues_yes": "Yes"},
+                    {"app_high_or_critical_issues_no": "No"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "text": "It is particularly an important requirement that projects must have no critical or high severity issues when applications are on an internet-facing network.",
+                  "warn": "yes",
+                  "name": "No high or critical issues in an internet-facing application",
+                  "severity": "high",
+                  "id": "warn_app_issues_and_internet_facing",
+                  "cond": "app_high_or_critical_issues_yes && app_internet_facing_yes"
+                },
+                {
+                  "type": "radiogroup",
+                  "text": "Does the project provide content that is intended to be viewed directly in a web browser.  For example, does your project control HTML/CSS content, headers, cookies, or client-side browser code like Javascript?",
+                  "id": "app_web_browser",
+                  "cond": "app_network_interfaces_yes",
+                  "choices": [
+                    {"app_web_browser_yes": "Yes"},
+                    {"app_web_browser_no": "No"}
                   ]
                 },
                 {
@@ -265,30 +280,12 @@
                 {
                   "type": "radiogroup",
                   "text": "Are any API interfaces public or internet-facing?",
-                  "cond": "app_api_yes",
+                  "cond": "app_api_yes && app_internet_facing_yes",
                   "id": "app_public_api",
                   "choices": [
                     {"app_public_api_yes": "Yes"},
                     {"app_public_api_no": "No"}
                   ]
-                },
-                {
-                  "type": "radiogroup",
-                  "text": "Does this project have any [PROJECT_UNRESOLVED_BUGS_HREF]?",
-                  "id": "app_high_or_critical_issues",
-                  "choices": [
-                    {"app_high_or_critical_issues_yes": "Yes"},
-                    {"app_high_or_critical_issues_no": "No"}
-                  ]
-                },
-                {
-                  "type": "tip",
-                  "text": "It is particularly an important requirement that projects must have no critical or high severity issues when applications are on an internet-facing network.",
-                  "warn": "yes",
-                  "name": "No high or critical issues in an internet-facing application",
-                  "severity": "high",
-                  "id": "warn_app_issues_and_internet_facing",
-                  "cond": "app_high_or_critical_issues_yes && app_internet_facing_yes"
                 },
                 {
                   "type": "radiogroup",
@@ -336,7 +333,7 @@
                   "type": "radiogroup",
                   "text": "Does the project require a new user to register?",
                   "id": "app_auth_reg",
-                  "cond" : "!app_project_type_standalone",
+                  "cond": "!app_project_type_standalone",
                   "choices": [
                     {"app_auth_reg_yes": "Yes"},
                     {"app_auth_reg_no": "No"}
@@ -362,41 +359,6 @@
                 },
                 {
                   "type": "radiogroup",
-                  "text": "Is a front-end framework used?",
-                  "id": "app_fw",
-                  "cond" : "app_project_type_WebApp || app_project_type_mobile_app || app_project_type_standalone || q_version_0_1",
-                  "choices": [
-                    {"app_fw_yes": "Yes"},
-                    {"app_fw_no": "No"}
-                  ]
-                },
-                {
-                  "type": "checkgroup",
-                  "text": "What front-end framework(s) are used?",
-                  "defaultChoice": false,
-                  "cond": "app_fw_yes",
-                  "choices": [
-                    {"app_fw_javascript": "Pure JavaScript"},
-                    {"app_fw_angularjs": "AngularJS"},
-                    {"app_fw_backbonejs": "BackboneJS"},
-                    {"app_fw_dojo": "Dojo"},
-                    {"app_fw_emberjs": "EmberJS"},
-                    {"app_fw_jquery": "jQuery"},
-                    {"app_fw_knockoutjs": "KnockoutJS"},
-                    {"app_fw_reactjs": "ReactJS"},
-                    {"app_fw_vuejs": "VueJS"},
-                    {"app_fw_other": "Other"}
-                  ]
-                },
-                {
-                  "type": "line",
-                  "text": "Additional front-end frameworks used:",
-                  "cond": "app_fw_other",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
-                  "id": "app_fw_other_detail"
-                },
-                {
-                  "type": "radiogroup",
                   "text": "Does the project distribute (or provide interfaces for distributing) media or other service files (either static or dynamically generated)?  For example, Office documents, Adobe documets, video, audio, or other kinds of media or service files?",
                   "id": "app_media",
                   "choices": [
@@ -408,12 +370,12 @@
                   "type": "box",
                   "text": "Describe the type(s) of kinds of media the project distributes or provides access to.  Is the media static or dynamic?",
                   "cond": "app_media_yes",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "id": "app_media_detail"
                 },
                 {
                   "type": "radiogroup",
-                  "text": "Does the project allow sending an email by an API or web interface ?",
+                  "text": "Does the project allow sending an email by an API or web interface?",
                   "id": "app_support_email",
                   "choices": [
                     {"app_support_email_yes": "Yes"},
@@ -422,7 +384,7 @@
                 },
                 {
                   "type": "radiogroup",
-                  "text": "Does the project use CAPTCHA for validation before allowing to send any email ?",
+                  "text": "Does the project use CAPTCHA for validation before allowing to send any email?",
                   "id": "app_support_email_captcha",
                   "cond": "app_support_email_yes",
                   "choices": [
@@ -450,6 +412,41 @@
                   ]
                 },
                 {
+                  "type": "radiogroup",
+                  "text": "Is a front-end framework used?",
+                  "id": "app_fw",
+                  "cond": "app_code_yes",
+                  "choices": [
+                    {"app_fw_yes": "Yes"},
+                    {"app_fw_no": "No"}
+                  ]
+                },
+                {
+                  "type": "checkgroup",
+                  "text": "What front-end framework(s) are used?",
+                  "defaultChoice": false,
+                  "cond": "app_fw_yes",
+                  "choices": [
+                    {"app_fw_javascript": "Pure JavaScript"},
+                    {"app_fw_angularjs": "AngularJS"},
+                    {"app_fw_backbonejs": "BackboneJS"},
+                    {"app_fw_dojo": "Dojo"},
+                    {"app_fw_emberjs": "EmberJS"},
+                    {"app_fw_jquery": "jQuery"},
+                    {"app_fw_knockoutjs": "KnockoutJS"},
+                    {"app_fw_reactjs": "ReactJS"},
+                    {"app_fw_vuejs": "VueJS"},
+                    {"app_fw_other": "Other"}
+                  ]
+                },
+                {
+                  "type": "line",
+                  "text": "Additional front-end frameworks used:",
+                  "cond": "app_fw_other",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
+                  "id": "app_fw_other_detail"
+                },
+                {
                   "type": "checkgroup",
                   "text": "What languages are used?",
                   "defaultChoice": false,
@@ -472,7 +469,7 @@
                   "type": "line",
                   "text": "Additional languages used:",
                   "cond": "app_lang_other",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "id": "app_lang_other_detail"
                 },
                 {
@@ -605,7 +602,7 @@
                   "type": "box",
                   "text": "<b>Overview Description</b>: provide a few sentences giving an overview description of the project.  Highlight significant subcomponents and interactions with other projects.  Describe any particular security considerations in this project's design.  Include links to any supporting design, architecture and security documentation that exists for this project.",
                   "required": true,
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "id": "app_documentation"
                 }
               ]
@@ -630,7 +627,7 @@
                   "type": "line",
                   "text": "Please share the repository URL:",
                   "cond": "app_static_code_yes",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "id": "app_static_code_repo_url"
                 },
                 {
@@ -642,6 +639,26 @@
                   "severity": "high",
                   "id": "warn_app_static_code",
                   "cond": "app_static_code_no"
+                },
+                {
+                  "type": "radiogroup",
+                  "text": "Have the project's web interfaces been registered with the AppSec team to perform <a href=\"https://en.wikipedia.org/wiki/Penetration_test\">pen-testing</a>?",
+                  "id": "app_pen_test",
+                  "cond": "app_internet_facing_yes && (app_project_type_WebApp || app_project_type_mobile_app)",
+                  "choices": [
+                    {"app_pen_test_yes": "Yes"},
+                    {"app_pen_test_no": "No"}
+                  ]
+                },
+                {
+                  "type": "tip",
+                  "text": "Please send an email to [ORGANIZATION_APPSEC_EMAIL_HREF] with a pointer to your website in the QA environment.  Your project must get separate confirmation that there are no critical security issues before this project can go to production.",
+                  "warn": "yes",
+                  "name": "Dynamic code analysis",
+                  "why": "Please explain your plans to address this:",
+                  "severity": "high",
+                  "id": "warn_app_pen_test",
+                  "cond": "app_pen_test_no"
                 },
                 {
                   "type": "info",
@@ -672,7 +689,7 @@
                   "type": "radiogroup",
                   "text": "Does the project team follow a process that ensures third-party manual ethical hack assessments are done at least once a year?",
                   "id": "app_manual",
-                  "cond": "(q_version_0_1 && app_internet_facing_yes) || (app_internet_facing_yes && (app_project_type_WebApp || app_project_type_mobile_app))",
+                  "cond": "app_internet_facing_yes && (app_project_type_WebApp || app_project_type_mobile_app)",
                   "choices": [
                     {"app_manual_yes": "Yes"},
                     {"app_manual_no": "No"}
@@ -682,14 +699,14 @@
                   "type": "line",
                   "text": "What was the date of your last ethical hack assessment?",
                   "cond": "app_manual_yes",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "id": "app_manual_date"
                 },
                 {
                   "type": "box",
                   "text": "Explain any issues that were identified during the assessment and whether they were resolved.",
                   "cond": "app_manual_yes",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "id": "app_manual_details"
                 },
                 {
@@ -731,7 +748,7 @@
                       "type": "box",
                       "text": "Explain what Restricted Information is associated with this project:",
                       "cond": "app_info_restricted_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_info_restricted_detail"
                     },
                     {
@@ -747,9 +764,9 @@
                     },
                     {
                       "type": "box",
-                      "text": "Explain how data and encryption keys are protected for securing Restricted data when it is stored at rest:",
+                      "text": "Explain how the data is encrypted at rest and how encryption keys are protected for securing Restricted data when it is stored at rest:",
                       "cond": "app_info_restricted_stored_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_info_restricted_stored_detail"
                     },
                     {
@@ -767,7 +784,7 @@
                       "type": "tip",
                       "text": "Restricted Information must be encrypted when it is stored digitally.",
                       "warn": "yes",
-                      "why": "Explain why restricted information is not being encrypted:",
+                      "why": "Explain why Restricted information is not being encrypted:",
                       "name": "Restricted Information Encryption Requirement",
                       "severity": "high",
                       "cond": "app_info_restricted_encrypted_no",
@@ -859,6 +876,14 @@
                       "id": "app_info_cc_processed"
                     },
                     {
+                      "type": "box",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "text": "Please explain how credit card transactions are managed to meet PCI compliance:",
+                      "name": "Credit card transaction detail",
+                      "cond": "app_info_cc_processed_yes",
+                      "id": "warn_app_info_cc_processed"
+                    },
+                    {
                       "type": "radiogroup",
                       "text": "Are credit card numbers stored digitally?",
                       "cond": "app_info_cc_yes",
@@ -913,7 +938,7 @@
                       "type": "box",
                       "text": "Explain what Confidential Information is associated with this project:",
                       "cond": "app_info_confidential_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_info_confidential_detail"
                     }
                   ]
@@ -958,7 +983,7 @@
                       "type": "box",
                       "text": "Explain how encryption is used when sending Restricted and Confidential information by email:",
                       "cond": "app_info_email_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_info_email__detail"
                     },
                     {
@@ -979,7 +1004,7 @@
                       "severity": "high",
                       "name": "Information Email Encryption Requirements",
                       "cond": "app_info_email_encrypted_no",
-                      "why": "Explain why restricted or confidential emails are not using message level encryption:",
+                      "why": "Explain why Restricted or Confidential emails are not using message level encryption:",
                       "id": "warn_app_info_email_encrypted"
                     },
                     {
@@ -994,9 +1019,9 @@
                     },
                     {
                       "type": "box",
-                      "text": "Explain how data and encryption keys are protected for securing Restricted and Confidential data when it is shared externally:",
+                      "text": "Explain how the data is encrypted at rest and how encryption keys are protected for securing Restricted and Confidential data when it is shared externally:",
                       "cond": "app_info_shared_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_info_shared_detail"
                     },
                     {
@@ -1016,31 +1041,13 @@
                       "warn": "yes",
                       "severity": "high",
                       "name": "Information Encryption Requirements",
-                      "why": "Explain why restricted or confidential information is not being encrypted:",
+                      "why": "Explain why Restricted or Confidential information is not being encrypted:",
                       "cond": "app_info_shared_file_encrypted_no",
                       "id": "warn_app_info_shared_file_encrypted"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Is Restricted or Confidential information shared externally over an internet protocol?",
-                      "defaultChoice": false,
-                      "choices": [
-                        {"app_info_protocol_yes": "Yes"},
-                        {"app_info_protocol_no": "No"}
-                      ],
-                      "id": "app_info_protocol"
-                    },
-                    {
-                      "type": "box",
-                      "text": "Explain how encryption is used when sending Restricted and Confidential information over an protocol:",
-                      "cond": "app_info_protocol_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
-                      "id": "app_info_protocol_detail"
-                    },
-                    {
-                      "type": "radiogroup",
-                      "text": "Is Restricted or Confidential information shared externally over an internet protocol only using <a href=\"https://en.wikipedia.org/wiki/Cryptographic_protocol\">secure data transport protocols</a> (e.g. HTTPS, IPsec, TLS) between source and destination?",
-                      "cond": "app_info_protocol_yes",
+                      "text": "Is Restricted or Confidential information transmitted only using <a href=\"https://en.wikipedia.org/wiki/Cryptographic_protocol\">secure data transport protocols</a> (e.g. HTTPS, IPsec, TLS) between source and destination?",
                       "defaultChoice": false,
                       "choices": [
                         {"app_info_protocol_secure_yes": "Yes"},
@@ -1049,20 +1056,72 @@
                       "id": "app_info_protocol_secure"
                     },
                     {
+                      "type": "box",
+                      "text": "Explain how encryption is used when sending Restricted and Confidential information over an protocol:",
+                      "cond": "app_info_protocol_secure_yes",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "id": "app_info_protocol_detail"
+                    },
+                    {
+                      "type": "box",
+                      "text": "It is a requirement to use a secure protocol when transmitting Restricted or Confidential data externally and recommended when on premesis.  Note that in AWS all transmission (even in private subnets) should use secure protocols.  Please explain why secure protocols are not being used?",
+                      "cond": "app_info_protocol_secure_no",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "id": "app_info_protocol_not_used_detail"
+                    },
+                    {
+                      "type": "radiogroup",
+                      "text": "Is Restricted or Confidential information shared externally over an internet protocol or is such data transmitted within AWS?",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"app_info_protocol_yes": "Yes"},
+                        {"app_info_protocol_no": "No"}
+                      ],
+                      "id": "app_info_protocol"
+                    },
+                    {
+                      "type": "radiogroup",
+                      "text": "Is Restricted or Confidential information shared externally or within AWS only using secure protocols?",
+                      "defaultChoice": false,
+                      "cond": "app_info_protocol_yes",
+                      "choices": [
+                        {"app_info_protocol_external_yes": "Yes"},
+                        {"app_info_protocol_external_no": "No"}
+                      ],
+                      "id": "app_info_protocol_external"
+                    },
+                    {
                       "type": "tip",
                       "text": "Transmission of Restricted or Confidential information over public networks must use secure data transport protocols (e.g. IPsec, TLS) between source and destination.",
                       "name": "Information Protocol Encryption Requirements",
                       "warn": "yes",
                       "severity": "high",
-                      "cond": "app_info_protocol_secure_no",
+                      "cond": "app_info_protocol_external_no",
                       "why": "Explain why secure data transport protocols are not being used:",
                       "id": "warn_app_info_protocol_secure"
+                    },
+                    {
+                      "type": "radiogroup",
+                      "text": "Is Restricted or Confidential information distributed externally via any other means?",
+                      "cond": "app_info_internal_yes",
+                      "choices": [
+                        {"app_info_dist_yes": "Yes"},
+                        {"app_info_dist_no": "No"}
+                      ],
+                      "id": "app_info_dist"
+                    },
+                    {
+                      "type": "box",
+                      "text": "Please explainwhat other ways Restricted or Confidential information is shared externally",
+                      "cond": "app_info_dist_yes",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "id": "app_info_dist_detail"
                     },
                     {
                       "type": "box",
                       "text": "Provide details on any additional controls that are used to ensure that Restricted and Confidential information is provided only to those who need to know:",
                       "id": "app_info_additional_controls",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]"
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]"
                     }
                   ]
                 },
@@ -1088,12 +1147,87 @@
                       "type": "box",
                       "text": "Explain what Internal Information is associated with this project:",
                       "cond": "app_info_internal_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_info_internal_detail"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Is Internal information distributed externally?",
+                      "text": "Is Internal information stored digitally?",
+                      "cond": "app_info_internal_yes",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"app_info_internal_stored_yes": "Yes"},
+                        {"app_info_internal_stored_no": "No"}
+                      ],
+                      "id": "app_info_internal_stored"
+                    },
+                    {
+                      "type": "box",
+                      "text": "Explain how the data is encrypted at rest and how encryption keys are protected for securing Internal data when it is stored at rest:",
+                      "cond": "app_info_internal_stored_yes",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "id": "app_info_internal_stored_detail"
+                    },
+                    {
+                      "type": "radiogroup",
+                      "text": "Is Internal information transmitted only using <a href=\"https://en.wikipedia.org/wiki/Cryptographic_protocol\">secure data transport protocols</a> (e.g. HTTPS, IPsec, TLS) between source and destination?",
+                      "defaultChoice": false,
+                      "cond": "app_info_internal_yes",
+                      "choices": [
+                        {"app_info_internal_dist_secure_yes": "Yes"},
+                        {"app_info_internal_dist_secure_no": "No"}
+                      ],
+                      "id": "app_info_internal_protocol_secure"
+                    },
+                    {
+                      "type": "box",
+                      "text": "Explain how encryption is used when sending Internal information over an protocol:",
+                      "cond": "app_info_internal_dist_secure_yes",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "id": "app_info_internal_protocols"
+                    },
+                    {
+                      "type": "box",
+                      "text": "It is a requirement to use a secure protocol when transmitting Internal data externally and recommended when on premesis.  Note that in AWS all transmission (even in private subnets) should use secure protocols.  Please explain why secure protocols are not being used?",
+                      "cond": "app_info_internal_dist_secure_no",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "id": "app_info_internal_protocol_not_used_detail"
+                    },
+                    {
+                      "type": "radiogroup",
+                      "text": "Is Internal information shared externally over an internet protocol or is such data transmitted within AWS?",
+                      "cond": "app_info_internal_yes",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"app_info_internal_protocol_yes": "Yes"},
+                        {"app_info_internal_protocol_no": "No"}
+                      ],
+                      "id": "app_info_internal_protocol"
+                    },
+                    {
+                      "type": "radiogroup",
+                      "text": "Is Internal information shared externally or within AWS only using secure protocols?",
+                      "defaultChoice": false,
+                      "cond": "app_info_internal_protocol_yes",
+                      "choices": [
+                        {"app_info_internal_protocol_external_yes": "Yes"},
+                        {"app_info_internal_protocol_external_no": "No"}
+                      ],
+                      "id": "app_info_internal_protocol_external"
+                    },
+                    {
+                      "type": "tip",
+                      "text": "Transmission of Intenral information over public networks must use secure data transport protocols (e.g. IPsec, TLS) between source and destination.",
+                      "name": "Information Protocol Encryption Requirements",
+                      "warn": "yes",
+                      "severity": "high",
+                      "cond": "app_info_internal_protocol_external_no",
+                      "why": "Explain why secure data transport protocols are not being used:",
+                      "id": "warn_app_info_internal_dist_secure"
+                    },
+                    {
+                      "type": "radiogroup",
+                      "text": "Is Internal information distributed externally via any other means?",
                       "cond": "app_info_internal_yes",
                       "choices": [
                         {"app_info_internal_dist_yes": "Yes"},
@@ -1102,31 +1236,11 @@
                       "id": "app_info_internal_dist"
                     },
                     {
-                      "type": "line",
-                      "text": "What protocls are used to transmit Internal information?",
+                      "type": "box",
+                      "text": "Please explainwhat other ways Internal information is shared externally",
                       "cond": "app_info_internal_dist_yes",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
-                      "id": "app_info_internal_protocols"
-                    },
-                    {
-                      "type": "radiogroup",
-                      "text": "Does transmission of Internal information over public networks use a <a href=\"https://en.wikipedia.org/wiki/Cryptographic_protocol\">secure data transport protocols</a> (e.g. IPsec, TLS) between source and destination?",
-                      "cond": "app_info_internal_dist_yes",
-                      "choices": [
-                        {"app_info_internal_dist_secure_yes": "Yes"},
-                        {"app_info_internal_dist_secure_no": "No"}
-                      ],
-                      "id": "app_info_internal_dist_secure"
-                    },
-                    {
-                      "type": "tip",
-                      "text": "Transmission of Internal information over public networks (e.g. Internet) must use a secure data transport protocol between source and destination.",
-                      "warn": "yes",
-                      "severity": "high",
-                      "name": "Internal Information Distribution Requirement",
-                      "cond": "app_info_internal_dist_secure_no",
-                      "why": "Explain why internal information over public networks is not using a secure data transport protocol:",
-                      "id": "warn_app_info_internal_dist_secure"
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "id": "app_info_internal_dist_detail"
                     }
                   ]
                 },
@@ -1139,7 +1253,7 @@
                       "type": "box",
                       "text": "Please provide an overview description of the types of data that this project processes, stores or transmits",
                       "id": "app_info_overview",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]"
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]"
                     }
                   ]
                 },
@@ -1259,7 +1373,7 @@
                   "type": "box",
                   "text": "Highlight any security configurations or features implemented by the project team.  If this project makes use of any project-specific Amazon IAM policies, Security Groups, Access Control Lists (ACL), other Amazon configuration that affects security, please provide detail:",
                   "id": "app_aws_iam_detail",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]"
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]"
                 },
                 {
                   "type": "checkgroup",
@@ -1288,7 +1402,7 @@
                   "type": "line",
                   "text": "What other AWS services are used?  Note that AWS services associated with Deployment, Logging, and Cryptography (Certificates, Keys, Passwords and Other Secrets) are discussed in separate parts of the form and do not need to be mentioned in this section.",
                   "id": "app_aws_other_detail",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_aws_other"
                 },
                 {
@@ -1298,7 +1412,7 @@
                   "why": "Explain why CloudFront is not used:",
                   "warn": "yes",
                   "severity": "high",
-                  "cond": "!app_aws_cloudfront"
+                  "cond": "app_web_browser_yes && (app_aws_cloudfront || app_aws_elb)"
                 },
                 {
                   "type": "radiogroup",
@@ -1340,14 +1454,14 @@
                   "type": "line",
                   "text": "Describe the source of the AMI's that are not [ORGANIZATION_NAME]-approved and managed?  Is this a trusted source?",
                   "id": "app_aws_ami_source",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_aws_ami_no"
                 },
                 {
                   "type": "box",
                   "text": "Please explain how machines not using a [ORGANIZATION_NAME]-approved and managed AMI are being maintained, managed and patched.",
                   "id": "app_aws_ami_maintained",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "cond": "app_aws_ami_no"
                 },
                 {
@@ -1385,21 +1499,21 @@
                   "type": "box",
                   "text": "Please explain how you are authenticating with systems not using a [ORGANIZATION_NAME]-approved and managed AMI:",
                   "id": "app_aws_ami_authz",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "cond": "app_aws_ami_no"
                 },
                 {
                   "type": "box",
                   "text": "Please explain how passwords and keys are rotated with systems not using a [ORGANIZATION_NAME]-approved and managed AMI",
                   "id": "app_aws_ami_secret_rotation",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "cond": "app_aws_ami_no"
                 },
                 {
                   "type": "box",
                   "text": "Please explain how machines not using a [ORGANIZATION_NAME]-approved and managed AMI are hardened to meet CIS standards",
                   "id": "app_aws_ami_hardened",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "cond": "app_aws_ami_no"
                 },
                 {
@@ -1422,7 +1536,7 @@
                   "type": "line",
                   "text": "Detail which other databases are being used in AWS?",
                   "id": "app_auth_db_other_detail",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_aws_db_other"
                 },
                 {
@@ -1477,7 +1591,7 @@
                   "type": "box",
                   "text": "Please describe the data that has world read access:",
                   "id": "app_aws_s3_world_readable_detail",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "cond": "app_aws_s3_world_readable_yes"
                 },
                 {
@@ -1692,19 +1806,8 @@
                       "type": "box",
                       "text": "Briefly describe the different roles associated with your application. Do not simply enumerate roles, but explain the purpose of them.  Describe any special permissions associated with different roles and explain any custom role definitions.",
                       "id": "app_auth_roles_detail",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "cond": "app_auth_roles"
-                    },
-                    {
-                      "type": "radiogroup",
-                      "text": "Aside from standard usage of [ORGANIZATION_RECOMMENDED_AUTH_SOLUTION_NAME], does the project employ any other username/password-based authentication?  If [ORGANIZATION_RECOMMENDED_AUTH_SOLUTION_NAME] is used in a non-standard way, answer \"Yes\".",
-                      "defaultChoice": false,
-                      "choices": [
-                        {"app_custom_auth_yes": "Yes"},
-                        {"app_custom_auth_no": "No"}
-                      ],
-                      "cond": "app_auth_requires_login || app_auth_admin_interface",
-                      "id": "app_custom_auth"
                     },
                     {
                       "type": "radiogroup",
@@ -1718,8 +1821,18 @@
                       "id": "app_authentication_uim"
                     },
                     {
+                      "type": "radiogroup",
+                      "text": "Aside from standard usage of [ORGANIZATION_RECOMMENDED_AUTH_SOLUTION_NAME] does the project employ any other username/password-based authentication?  If [ORGANIZATION_RECOMMENDED_AUTH_SOLUTION_NAME] is used in a non-standard way, answer \"Yes\".",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"app_custom_auth_yes": "Yes"},
+                        {"app_custom_auth_no": "No"}
+                      ],
+                      "cond": "app_auth_uim_yes",
+                      "id": "app_custom_auth"
+                    },
+                    {
                       "type": "checkgroup",
-                      "insertAfter": "app_auth_roles_detail",
                       "text": "Is your application integrated with any of the following single sign-on (SSO) mechanisms?",
                       "defaultChoice": false,
                       "choices": [
@@ -1731,6 +1844,70 @@
                         {"app_auth_sso_none": "None of the above"}
                       ],
                       "cond": "(app_auth_uim_no || app_custom_auth_yes) && (app_auth_requires_login || app_auth_admin_interface)"
+                    },
+                    {
+                      "type": "box",
+                      "text": "What other SSO mechanisms does the application support?",
+                      "id": "app_auth_sso_other_detail",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "cond": "app_auth_sso_other"
+                    },
+                    {
+                      "type": "box",
+                      "text": "Please explain why authentication is not needed.",
+                      "id": "app_auth_sso_none_detail",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "cond": "app_auth_sso_none"
+                    },
+                    {
+                      "type": "tip",
+                      "text": "Integrating with LDAP and/or Active Directory has a significant downside: any application that integrates with it has to receive the user's SSO password. As a result, a vulnerability in any integrated application puts the password at risk for all other applications. We recommend using an SSO mechanism that does not require the password to be sent anywhere other than a central authentication system.",
+                      "warn": "yes",
+                      "name": "LDAP/AD integration sends password to application",
+                      "severity": "high",
+                      "id": "warn_app_auth_ldap_password",
+                      "cond": "app_auth_sso_ldap"
+                    },
+                    {
+                      "type": "tip",
+                      "text": "OpenID 2.0 has been replaced by OpenID Connect (also called OAuth2 Login). We recommend updating your application's SSO integration to support OpenID Connect.",
+                      "warn": "yes",
+                      "name": "OpenID is deprecated",
+                      "severity": "high",
+                      "id": "warn_app_auth_openid_deprecated",
+                      "cond": "app_auth_sso_openid && !app_auth_sso_oauth"
+                    }
+                  ]
+                },
+                {
+                  "type": "block",
+                  "text": "6.2: OAuth2 Login",
+                  "id": "block_oauth2",
+                  "cond": "app_auth_sso_oauth",
+                  "items": [
+                    {
+                      "type": "radiogroup",
+                      "text": "Implementing OAuth2 Login / OpenID Connect from scratch is fairly complex and error-prone, and mistakes can result in security vulnerabilities. Select the option that best describes your implementation:",
+                      "defaultChoice": false,
+                      "choices": [
+                        {"app_auth2_library": "Very secure: We are using a standard OAuth2 library, and we update it when security fixes are released."},
+                        {"app_auth2_self_secure": "Secure: We implemented OAuth2 on our own, but our employees are experts and we are convinced that it is implemented securely."},
+                        {"app_auth2_self": "Not sure: We implemented OAuth2 on our own, and it seemed simple at the time. I am not sure about the security of our implementation."}
+                      ]
+                    },
+                    {
+                      "type": "tip",
+                      "text": "If your employees really are OAuth2 experts, you are probably fine. But note that even standard libraries have had vulnerabilities due to the intricacies of the standard. Be sure to ask your penetration testing provider to take a look at the OAuth2 implementation.",
+                      "id": "tip_app_auth2_self_secure"
+                    },
+                    {
+                      "type": "tip",
+                      "text": "Implementing OAuth2 on your own is extremely dangerous. Even the experts on the OAuth2 standards panel concluded that the only way to securely implement it is through a well-known and well-tested library. Some of these libraries are very easy to use (e.g., the <a href='https://developers.google.com/identity/toolkit/'>Google Identity Toolkit</a>), so replacing your custom implementation should be feasible.",
+                      "why": "Please explain how you intend to resolve this issue.  If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below:",
+                      "warn": "yes",
+                      "name": "Homebrewed OAuth2 implementation",
+                      "severity": "high",
+                      "id": "warn_app_auth2_self"
                     }
                   ]
                 },
@@ -1744,7 +1921,7 @@
                       "type": "box",
                       "text": "What username/password-based logins does the application use? For example, if there is a separate administrator authentication, mention that.",
                       "id": "app_custom_auth_explain",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]"
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]"
                     },
                     {
                       "type": "radiogroup",
@@ -1806,7 +1983,7 @@
                           "type": "box",
                           "text": "Explain how users get their initial passwords:",
                           "id": "app_custom_auth_initpwd_other_what",
-                          "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                          "maxlength": "[MAXLENGTH_BOX_ITEM]",
                           "cond": "app_custom_auth_initpwd_other"
                         },
                         {
@@ -1857,7 +2034,7 @@
                           "type": "box",
                           "text": "Describe your password recovery mechanism:",
                           "id": "app_custom_auth_recovery_other_what",
-                          "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                          "maxlength": "[MAXLENGTH_BOX_ITEM]",
                           "cond": "app_custom_auth_recovery_other"
                         },
                         {
@@ -1927,14 +2104,14 @@
                       "type": "box",
                       "text": "Describe the mechanism you are using:",
                       "id": "app_auth_cookies_other_explain",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "cond": "app_auth_cookies_other"
                     },
                     {
                       "type": "line",
                       "text": "What is the name of the framework that generates your session IDs?",
                       "id": "app_auth_cookies_framework_which",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "cond": "app_auth_cookies_framework"
                     },
                     {
@@ -1962,7 +2139,7 @@
                       "type": "line",
                       "text": "How long is the session timeout?",
                       "id": "app_auth_cookies_timeout_length",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "cond": "app_auth_cookies_timeout_yes || app_auth_cookies_framework"
                     },
                     {
@@ -2032,7 +2209,7 @@
                       "type": "box",
                       "text": "Describe the restrictions used on the server side to provide horizontal access control:",
                       "cond": "app_authz_horizontal_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_authz_horizontal_detail"
                     },
                     {
@@ -2047,21 +2224,10 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does this program support users who have different role-based access?",
-                      "defaultChoice": false,
-                      "cond": "!app_auth_roles || q_version_0_1",
-                      "id": "app_authz_multiple_roles",
-                      "choices": [
-                        {"app_authz_multiple_roles_yes": "Yes"},
-                        {"app_authz_multiple_roles_no": "No"}
-                      ]
-                    },
-                    {
-                      "type": "radiogroup",
                       "text": "<strong>Vertical Access Control</strong>: When an application supports multiple roles, users should not be able to gain privileges or perform unauthorized actions by loading pages or features that should only be available to users in a different role. Throughout the project, have you ensured that users can perform only those actions that are appropriate for their roles?",
                       "defaultChoice": false,
                       "id": "app_authz_vertical",
-                      "cond": "app_authz_multiple_roles_yes || app_auth_roles",
+                      "cond": "app_auth_roles",
                       "choices": [
                         {"app_authz_vertical_yes": "The project enforces these restrictions on the server side. We have processes in place to make sure nothing slips through the cracks."},
                         {"app_authz_vertical_no": "It is possible that we missed checks like this in a few places."}
@@ -2071,7 +2237,7 @@
                       "type": "box",
                       "text": "Describe the techniques and restrictions used on the server side to provide vertical access control:",
                       "cond": "app_authz_vertical_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_authz_vertical_detail"
                     },
                     {
@@ -2247,24 +2413,24 @@
                       "type": "box",
                       "text": "What other mechanisms are used for providing API authentication?  Explain what services are used.  Describe mechanisms used for authentication, like whether tokens are used.",
                       "id": "app_auth_api_other_detail",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "cond": "app_auth_api_other || app_auth_api_aws_other"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Briefly explain how API authorization works.  For example, if tokens are used explain how the tokens are generated and how the client gets the token.",
                       "id": "app_auth_api_detail"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Explain what kind of users authenticate to the system.  Are they associated with individuals or clients?",
                       "id": "app_auth_api_users"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Do all users have the same access?  If different users have different access (e.g. via roles), please provide details and explain how role assignment happens and where roles are stored (e.g. Active Directory, in a project controled data store like a database or somewhere else):",
                       "id": "app_auth_api_user_access"
                     },
@@ -2285,7 +2451,7 @@
             {
               "type": "block",
               "text": "7: Privileged User Accounts",
-              "cond" : "app_auth_yes || q_version_0_1",
+              "cond": "app_auth_yes",
               "items": [
                 {
                   "type": "radiogroup",
@@ -2301,12 +2467,12 @@
                   "type": "box",
                   "text": "List privileged accounts and their purpose:",
                   "id": "app_privileged_user_explain",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "cond": "app_privileged_user_yes"
                 },
                 {
                   "type": "box",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "text": "Explain how privileged user accounts make use of the principle of least privilege and need-to-know:",
                   "id": "app_privileged_user_least_privilege",
                   "cond": "app_privileged_user_yes"
@@ -2397,7 +2563,7 @@
                       "type": "line",
                       "text": "What other mechanisms are used for storing secrets?",
                       "id": "app_secret_other_detail",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "cond": "app_secret_other"
                     },
                     {
@@ -2414,7 +2580,7 @@
                       "type": "box",
                       "text": "List and explain the purpose of each certificate, key, password or other secret.  Explain how these are protected:",
                       "cond": "app_secret_yes",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_secret_detail"
                     },
                     {
@@ -2471,7 +2637,7 @@
                       "type": "box",
                       "text": "Please explain how secrets are rotated",
                       "id": "app_secret_aws_rotation",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "cond": "app_secret_yes"
                     }
                   ]
@@ -2496,7 +2662,7 @@
                       "type": "line",
                       "text": "What other AWS mechanisms are used for storing secrets?",
                       "id": "app_secret_aws_other_detail",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "cond": "app_secret_aws_other"
                     },
                     {
@@ -2551,7 +2717,7 @@
               "items": [
                 {
                   "type": "box",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "text": "Describe what security coding practices have been considered with this project and what has been done to address common concerns (e.g. OWASP Top 10).",
                   "id": "app_secure_coding_practices"
                 },
@@ -2579,7 +2745,7 @@
                 },
                 {
                   "type": "tip",
-                  "text": "Dealing with user-provided and untrusted XML may make your application vulnerable to attacks. For example, the expat XML parser (written in C) has been found vulnerable to buffer overflow attacks. Even if you use a secure parser (or run it in a sandbox), things that can go wrong.<p>Various attacks rely on the attacker's ability to specify XML entities. Entities are \"codes\" (such as <code>&amp;quot;</code>) that are translated into defined strings by the parser. HTML has a predefined set of entities, but in XML, entities can be specified arbitrarily. An entity specification usually looks like this:<p><code>&lt;!ENTITY ent \"Hello!\"&gt;</code><p>With this definition, whenever the parser comes across <code>&amp;ent;</code>, it will replace it with <code>Hello!</code>. Entities are usually defined in the document type, which can be provided in a separate file or  in the <code>&lt;!DOCTYPE&gt;</code> section at the beginning of an XML document.Entities are used in a variety of XML-related attacks. For example, they can be used for something called the <a href='http://www.ibm.com/developerworks/xml/library/x-tipcfsx/index.html'>billion laughs attack</a>, where an entity resolves to other entities, which resolve to other entities, etc., causing high memory usage and essentially resulting in a denial-of-service attack.<p>Even more serious is an attack using <a href='http://www.securiteam.com/securitynews/6D0100A5PU.html'>external entities</a>. Definitions of external entities look similar to regular entity definitions, but they reference local files or URLs. Unless the XML parser has been specifically instructed not to expand external entities, a definition like <code>&lt;!ENTITY etc SYSTEM \"file:///etc/passwd\"&gt;</code> would include the /etc/passwd file where the entity &amp;etc; occurs in the XML document, leading to the disclosure of files as well as internal URLs.It is very important to restrict entity specification in user-provided or untrusted XML. Make sure your parser is adequately configured.",
+                  "text": "Dealing with user-provided and untrusted XML may make your application vulnerable to attacks. For example, the expat XML parser (written in C) has been found vulnerable to buffer overflow attacks. Even if you use a secure parser (or run it in a sandbox), things that can go wrong.<p>Various attacks rely on the attacker's ability to specify XML entities. Entities are \"codes\" (such as <code>&amp;quot;</code>) that are translated into defined strings by the parser. HTML has a predefined set of entities, but in XML, entities can be specified arbitrarily. An entity specification usually looks like this:<p><code>&lt;!ENTITY ent \"Hello!\"&gt;</code><p>With this definition, whenever the parser comes across <code>&amp;ent;</code>, it will replace it with <code>Hello!</code>. Entities are usually defined in the document type, which can be provided in a separate file or in the <code>&lt;!DOCTYPE&gt;</code> section at the beginning of an XML document.Entities are used in a variety of XML-related attacks. For example, they can be used for something called the <a href='http://www.ibm.com/developerworks/xml/library/x-tipcfsx/index.html'>billion laughs attack</a>, where an entity resolves to other entities, which resolve to other entities, etc., causing high memory usage and essentially resulting in a denial-of-service attack.<p>Even more serious is an attack using <a href='http://www.securiteam.com/securitynews/6D0100A5PU.html'>external entities</a>. Definitions of external entities look similar to regular entity definitions, but they reference local files or URLs. Unless the XML parser has been specifically instructed not to expand external entities, a definition like <code>&lt;!ENTITY etc SYSTEM \"file:///etc/passwd\"&gt;</code> would include the /etc/passwd file where the entity &amp;etc; occurs in the XML document, leading to the disclosure of files as well as internal URLs.It is very important to restrict entity specification in user-provided or untrusted XML. Make sure your parser is adequately configured.",
                   "warn": "yes",
                   "name": "User provided XML processed/manipulated",
                   "severity": "medium",
@@ -2591,14 +2757,13 @@
                   "type": "line",
                   "text": "Please explain how the application loads content and UI elements:",
                   "id": "info_app_webvuln_not_defined",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_webvuln_not_defined"
                 },
                 {
                   "type": "block",
                   "text": "9.1: Cross-Site Scripting",
                   "id": "block_xss",
-                  "cond" : "app_project_type_WebApp || app_project_type_mobile_app || q_version_0_1",
                   "items": [
                     {
                       "type": "checkgroup",
@@ -2622,7 +2787,7 @@
                     },
                     {
                       "type": "tip",
-                      "text": "Using a templating system to escape user input is a good way to protect against XSS. But be careful with directives that disable automatic escaping, and watch for the direct display of user input (for example, in error messages). Additionally, be aware of the context in which user input is used in templates. Not all templating systems automatically understand that different escaping may be required, depending on where in the application the user input is displayed. For example, many templating systems would not correctly escape a construct such as <code>&gt;a href=\"{{ user_input }}\"&lt;</code>, where a user could supply <code>javascript:alert(/xss/)</code> as user_input. We recommend using a context-sensitive templating system.",
+                      "text": "Using a templating system to escape user input is a good way to protect against XSS. But be careful with directives that disable automatic escaping, and watch for the direct display of user input (for example, in error messages). Additionally, be aware of the context in which user input is used in templates. Not all templating systems automatically understand that different escaping may be required, depending on where in the application the user input is displayed. For example, many templating systems would not correctly escape a construct such as <code>&gt;a href=\"\"&lt;</code>, where a user could supply <code>javascript:alert(/xss/)</code> as user_input. We recommend using a context-sensitive templating system.",
                       "id": "tip_app_xss_templating",
                       "cond": "app_xss_templating"
                     },
@@ -2643,7 +2808,7 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Describe your strategy for protecting against XSS vulnerabilities:",
                       "id": "app_xss_other_explanation",
                       "cond": "app_xss_other"
@@ -2665,7 +2830,7 @@
                       "id": "app_xss_content_type",
                       "choices": [
                         {"app_xss_content_type_yes": "Yes, we take great care to set this, knowing that otherwise we might be introducing XSS vulnerabilities."},
-                        {"app_xss_content_type_no": "I'm not sure all pages set an appropriate content type."}
+                        {"app_xss_content_type_no": "I am not sure all pages set an appropriate content type."}
                       ]
                     },
                     {
@@ -2741,7 +2906,7 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Describe the other mechanism you are using to protect against SQL injection:",
                       "id": "app_sqli_other_details",
                       "cond": "app_sqli_other"
@@ -2756,7 +2921,7 @@
                       "type": "line",
                       "text": "What ORM framework are you using?",
                       "id": "app_sqli_orm_which",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "cond": "app_sqli_orm"
                     },
                     {
@@ -2809,12 +2974,12 @@
                       "type": "line",
                       "text": "What other plugins are required by your application?",
                       "id": "app_plugin_other_which",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "cond": "app_plugin_other"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Explain what the plugin is used for, what technology it uses (e.g., ActiveX, NPAPI, Chrome plugin, etc.), how it is usually deployed to your users, and what privileges it requires:",
                       "id": "app_plugin_other_desc",
                       "cond": "app_plugin_other"
@@ -2856,6 +3021,7 @@
                   "choices": [
                     {"app_upload_storage_fs": "On the file system"},
                     {"app_upload_storage_db": "In a database"},
+                    {"app_upload_storage_memory": "Not stored anywhere, processed only in memory"},
                     {"app_upload_storage_other": "Somewhere else"}
                   ]
                 },
@@ -2863,7 +3029,7 @@
                   "type": "line",
                   "text": "Explain where the uploaded files are stored:",
                   "id": "app_upload_storage_other_expl",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_upload_storage_other"
                 },
                 {
@@ -2878,7 +3044,7 @@
                 {
                   "type": "line",
                   "text": "What file types are expected?",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "id": "app_upload_file_types"
                 },
                 {
@@ -2937,7 +3103,7 @@
                 },
                 {
                   "type": "box",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "text": "Explain other controls that are in place:",
                   "id": "app_upload_type_other_detail",
                   "cond": "app_upload_type_other"
@@ -2946,14 +3112,14 @@
                   "type": "line",
                   "text": "What filetypes are whitelisted?",
                   "id": "app_upload_type_whitelist_detail",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_upload_type_whitelist"
                 },
                 {
                   "type": "line",
                   "text": "What filetypes are blacklisted?",
                   "id": "app_upload_type_blacklist_detail",
-                  "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
                   "cond": "app_upload_type_blacklist"
                 },
                 {
@@ -3024,18 +3190,18 @@
                       "type": "line",
                       "text": "Describe additional types of storage used:",
                       "cond": "app_info_storage_other",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "id": "app_lang_storage_other_detail"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Explain the storage access control used:",
                       "id": "app_info_storage_access_control"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Explain how permissions are setup to ensure that data access is limited to meet the principle of least privilege:",
                       "id": "app_info_storage_least_privilege"
                     }
@@ -3062,7 +3228,7 @@
                       "type": "line",
                       "text": "What databases are being used (Oracle, MSQL, etc.)?",
                       "id": "app_db_database",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "cond": "(app_db_yes && !app_aws_db) || app_db_aws_only_no"
                     },
                     {
@@ -3091,21 +3257,21 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Explain how the password is protected or details on what service is used.  If encryption is used, provide details about the encryption algorithm:",
                       "cond": "app_db_pw_service_other || app_db_pw_na",
                       "id": "app_db_pw_service_other_detail"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Explain how the password is protected for databases that are not in AWS:",
                       "cond": "app_db_aws_only_no",
                       "id": "app_db_pw_service_kms_detail"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Explain how the password is protected for AWS databases:",
                       "cond": "app_aws_db",
                       "id": "app_db_pw_service_not_aws_detail"
@@ -3208,14 +3374,23 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain how database passwords are rotated",
                       "id": "app_db_pw_rotated"
                     },
                     {
+                      "type": "tip",
+                      "text": "Database connection should be encrypted.",
+                      "id": "warn_app_db_connection_encrypted",
+                      "why": "Explain why database connection is not encrypted and what plans do you have to fix it:",
+                      "warn": "yes",
+                      "name": "Database connection not encrypted",
+                      "severity": "high",
+                      "cond": "app_db_connection_encrypted_no"
+                    },
+                    {
                       "type": "radiogroup",
-                      "insertAfter": "app_db_pw_rotated",
-                      "text": "Is database <b>connection</b> encrypted? [DB_CONNECTION_BEST_PRACTICE_HREF]",
+                      "text": "Are database <b>connections</b> encrypted? [DB_CONNECTION_BEST_PRACTICE_HREF].",
                       "defaultChoice": false,
                       "choices": [
                         {"app_db_connection_encrypted_yes": "Yes"},
@@ -3231,7 +3406,6 @@
               "type": "block",
               "text": "12: Logging",
               "id": "block_logging",
-              "cond" : "q_version_0_1 || (app_code_yes && (app_project_type_WebApp || app_project_type_WebServices || app_project_type_server_generic || app_project_type_mobile_app))",
               "items": [
                 {
                   "type": "info",
@@ -3284,7 +3458,6 @@
               "type": "block",
               "text": "13: Testing and QA",
               "id": "block_qa",
-              "cond": "app_code_yes || q_version_0_1",
               "items": [
                 {
                   "type": "info",
@@ -3361,7 +3534,7 @@
                 },
                 {
                   "type": "box",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "text": "Describe specific QA security tests performed:",
                   "cond": "app_testing_qa_security_yes",
                   "id": "app_testing_qa_security_detail"
@@ -3382,7 +3555,6 @@
               "type": "block",
               "text": "14: Deployment, Monitoring and Operations",
               "id": "block_monitoring_operations",
-              "cond" : "app_code_yes || q_version_0_1",
               "items": [
                 {
                   "type": "block",
@@ -3405,14 +3577,13 @@
                       "type": "line",
                       "text": "Additional deployment services:",
                       "cond": "app_deploy_service_other",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "id": "app_deploy_service_other_detail"
                     },
                     {
                       "type": "radiogroup",
                       "text": "Do your lower environments (e.g. development, staging, UAT) connect only to lower environments for dependent services/APIs?",
                       "id": "app_aws_lower_environment_separation",
-                      "cond" : "app_code_yes || q_version_0_1",
                       "choices": [
                         {"app_aws_lower_environment_separation_yes": "Yes"},
                         {"app_aws_lower_environment_separation_no": "No"}
@@ -3447,12 +3618,12 @@
                       "type": "line",
                       "text": "Additional AWS deployment services:",
                       "cond": "app_deploy_service_aws_other",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "id": "app_deploy_service_aws_other_detail"
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain how this project meets [ORGANIZATION_PATCH_MANAGEMENT_POLICY_HREF] and ensures that servers are kept patched:",
                       "id": "app_deploy_patching"
                     }
@@ -3491,7 +3662,7 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please provide detail about what you monitor, what tools are used for monitoring, what alerts are generated to trigger further investigation or automatic response",
                       "id": "app_monitoring_detail"
                     }
@@ -3565,7 +3736,7 @@
                       "type": "line",
                       "text": "Additional monitoring technologies used:",
                       "cond": "app_aws_monitor_other",
-                      "maxlength" : "[MAXLENGTH_LINE_ITEM]",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
                       "id": "app_aws_monitor_other_details"
                     },
                     {
@@ -3826,6 +3997,13 @@
                   ]
                 },
                 {
+                  "type": "line",
+                  "text": "Describe the application platforms:",
+                  "cond": "app_mobile_platform_others",
+                  "maxlength": "[MAXLENGTH_LINE_ITEM]",
+                  "id": "app_mobile_platform_detail"
+                },
+                {
                   "type": "tip",
                   "text": "Please go through the <a href=\"https://developer.apple.com/library/content/documentation/Security/Conceptual/Security_Overview/Introduction/Introduction.html#//apple_ref/doc/uid/TP30000976\">Security Overview</a> for Apple platforms and be aware and gain insights about <a href=\"https://developer.apple.com/library/content/documentation/Security/Conceptual/SecureCodingGuide/Introduction.html\">Apple's Secure Coding Guidelines</a>.",
                   "id": "tip_mobile_ios_coding_guideline",
@@ -3844,7 +4022,7 @@
                   "items": [
                     {
                       "type": "radiogroup",
-                      "text": "Are there application components that have been identified and are known to be NOT needed but are still shipped in the build ?",
+                      "text": "Are there application components that have been identified and are known to be NOT needed but are still shipped in the build?",
                       "id": "mobile_architecture_components",
                       "choices": [
                         {"mobile_architecture_components_yes": "Yes"},
@@ -3862,7 +4040,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Is there a feature that depends upon security controls enforced ONLY on the client side (except for features like Fingerprint/TouchID), but NOT on the respective remote endpoint(s) ?",
+                      "text": "Is there a feature that depends upon security controls enforced ONLY on the client side (except for features like Fingerprint/TouchID), but NOT on the respective remote endpoint(s)?",
                       "id": "mobile_architecture_client_control",
                       "choices": [
                         {"mobile_architecture_client_control_yes": "Yes"},
@@ -3880,7 +4058,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Have you worked with the project architect and technical leads so that a threat model for the mobile app and the associated remote services, which identifies potential threats and countermeasures, has been produced ?",
+                      "text": "Have you worked with the project architect and technical leads so that a threat model for the mobile app and the associated remote services, which identifies potential threats and countermeasures, has been produced?",
                       "id": "mobile_architecture_threat_model",
                       "choices": [
                         {"mobile_architecture_threat_model_yes": "Yes"},
@@ -3889,9 +4067,9 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "cond": "mobile_architecture_threat_model_yes",
-                      "text": "That's good to know! Please provide details below of what threats were identified and what's the plan to address those ? You may like to provide reference to a wiki page containing the threat model.",
+                      "text": "That's good to know! Please provide details below of what threats were identified and what's the plan to address those? You may like to provide reference to a wiki page containing the threat model.",
                       "id": "mobile_architecture_threat_model_details"
                     },
                     {
@@ -3905,7 +4083,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Do all the security controls have centralized implementation ?",
+                      "text": "Do all the security controls have centralized implementation?",
                       "id": "mobile_architecture_control_placement",
                       "choices": [
                         {"mobile_architecture_control_placement_yes": "Yes"},
@@ -3920,7 +4098,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Please confirm that a mechanism for enforcing (auto)updates of the mobile app exists ?",
+                      "text": "Please confirm that a mechanism for enforcing (auto)updates of the mobile app exists?",
                       "id": "mobile_architecture_autoupdate",
                       "choices": [
                         {"mobile_architecture_autoupdate_yes": "Yes"},
@@ -3954,7 +4132,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application provide a mobile payments or in-app purchase feature ?",
+                      "text": "Does the application provide a mobile payments or in-app purchase feature?",
                       "id": "app_mobile_purchase",
                       "choices": [
                         {"app_mobile_purchase_yes": "Yes"},
@@ -3963,7 +4141,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application offer to save and/or later makes use of the user credentials or other such sensitive data on the mobile file-system ?",
+                      "text": "Does the application offer to save and/or later makes use of the user credentials or other such sensitive data on the mobile file-system?",
                       "id": "app_mobile_credentials_save",
                       "choices": [
                         {"app_mobile_credentials_save_yes": "Yes"},
@@ -3972,7 +4150,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application use system credential storage facilities appropriately to store sensitive data, such as user credentials or cryptographic keys ?",
+                      "text": "Does the application use system credential storage facilities appropriately to store sensitive data, such as user credentials or cryptographic keys?",
                       "id": "app_mobile_sensitive_system_storage",
                       "cond": "app_mobile_credentials_save_yes",
                       "choices": [
@@ -3982,7 +4160,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application allow running the app on jailbroken or rooted device? ?",
+                      "text": "Does the application allow running the app on jailbroken or rooted device?",
                       "id": "app_mobile_rooted",
                       "choices": [
                         {"app_mobile_rooted_yes": "Yes"},
@@ -3997,7 +4175,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application use Fingerprint or TouchID to identify the user ?",
+                      "text": "Does the application use Fingerprint or TouchID to identify the user?",
                       "id": "app_mobile_touchID",
                       "choices": [
                         {"app_mobile_touchID_yes": "Yes"},
@@ -4015,7 +4193,7 @@
                     },
                     {
                       "type": "checkgroup",
-                      "text": "Where does the application save any user or application data on the file-system ?",
+                      "text": "Where does the application save any user or application data on the file-system?",
                       "id": "app_mobile_data_save",
                       "choices": [
                         {"app_mobile_data_save_external": "External storage (e.g. SD card)"},
@@ -4027,8 +4205,15 @@
                       ]
                     },
                     {
+                      "type": "line",
+                      "text": "Describe where the application saves user or application data:",
+                      "cond": "app_mobile_data_save_others",
+                      "maxlength": "[MAXLENGTH_LINE_ITEM]",
+                      "id": "app_mobile_data_save_others_detail"
+                    },
+                    {
                       "type": "radiogroup",
-                      "text": "Does the application perform input validation when handling data from external storage as you would with data from any untrusted source ?",
+                      "text": "Does the application perform input validation when handling data from external storage as you would with data from any untrusted source?",
                       "id": "app_mobile_external_input_validation",
                       "cond": "app_mobile_data_save_external",
                       "choices": [
@@ -4053,7 +4238,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application make use of WebView or UIWebView to load any sensitive or enterprise proprietary data or any other kind of data ?",
+                      "text": "Does the application make use of WebView or UIWebView to load any sensitive or enterprise proprietary data or any other kind of data?",
                       "id": "app_mobile_webview",
                       "choices": [
                         {"app_mobile_webview_yes": "Yes"},
@@ -4062,7 +4247,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application clear WebView and network response cache to delete any files stored locally or use <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control\">server-side headers such as no-cache</a> to indicate that an application should not cache particular content ?",
+                      "text": "Does the application clear WebView and network response cache to delete any files stored locally or use <a href=\"https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control\">server-side headers such as no-cache</a> to indicate that an application should not cache particular content?",
                       "id": "app_mobile_webview_cache",
                       "cond": "app_mobile_webview_yes",
                       "choices": [
@@ -4081,7 +4266,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Is any sensitive data written to application logs ?",
+                      "text": "Is any sensitive data written to application logs?",
                       "id": "app_mobile_data_log",
                       "choices": [
                         {"app_mobile_data_log_yes": "Yes"},
@@ -4090,14 +4275,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
-                      "text": "What sensitive data is being written to application logs ? Please provide details:",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "text": "What sensitive data is being written to application logs? Please provide details:",
                       "id": "mobile_log_data_detail",
                       "cond": "app_mobile_data_log_yes"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Is any sensitive data shared with third parties unless it is a necessary part of the architecture ?",
+                      "text": "Is any sensitive data shared with third parties unless it is a necessary part of the architecture?",
                       "id": "app_mobile_data_shared",
                       "choices": [
                         {"app_mobile_data_shared_yes": "Yes"},
@@ -4106,14 +4291,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
-                      "text": "What sensitive data is being shared ? Please provide details:",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "text": "What sensitive data is being shared? Please provide details:",
                       "id": "app_mobile_data_shared_detail",
                       "cond": "app_mobile_data_shared_yes"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Is the keyboard cache disabled and clipboard deactivated on text inputs/fields that process sensitive data ?",
+                      "text": "Is the keyboard cache disabled and clipboard deactivated on text inputs/fields that process sensitive data?",
                       "id": "app_mobile_data_keyboard",
                       "choices": [
                         {"app_mobile_data_keyboard_yes": "Yes"},
@@ -4131,7 +4316,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Is any sensitive data exposed via IPC mechanisms (for example, deep linking) or via backups generated by the mobile operating system ?",
+                      "text": "Is any sensitive data exposed via IPC mechanisms (for example, deep linking) or via backups generated by the mobile operating system?",
                       "id": "app_mobile_data_ipc",
                       "choices": [
                         {"app_mobile_data_ipc_yes": "Yes"},
@@ -4149,7 +4334,7 @@
                     },
                     {
                       "type": "checkgroup",
-                      "text": "Please select which of the following security controls does the application implement ?",
+                      "text": "Please select which of the following security controls does the application implement?",
                       "id": "app_mobile_data_other_controls",
                       "choices": [
                         {"app_mobile_data_pwd_ui": "Verified that no sensitive data, such as passwords or pins, is exposed through the user interface."},
@@ -4181,7 +4366,7 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please indicate if any of the above security controls are unchecked (not implemented). Explain why those are not implemented and what's the future course of action:",
                       "id": "app_mobile_data_other_controls_detail",
                       "cond": "!app_mobile_data_pwd_ui || !app_mobile_data_screenshots || !app_mobile_data_memory || !app_mobile_data_acp || !app_mobile_data_education || !app_mobile_data_logout || !app_mobile_data_pwd_policy || !app_mobile_data_login_abuse || !app_mobile_data_2fa || !app_mobile_data_step_up_auth || !app_mobile_data_login_log || !app_mobile_data_cert_pinned || !app_mobile_data_account_recovery"
@@ -4195,7 +4380,7 @@
                   "items": [
                     {
                       "type": "radiogroup",
-                      "text": "Does the application require specific permissions to run or access a product feature ?",
+                      "text": "Does the application require specific permissions to run or access a product feature?",
                       "id": "app_mobile_permissions",
                       "choices": [
                         {"app_mobile_permissions_yes": "Yes"},
@@ -4210,14 +4395,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
-                      "text": "What permissions are used by the application to run? Are all these permissions absolutely required ? Are the permissions requested as the user starts using specific sections of the app ? Please provide details:",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                      "text": "What permissions are used by the application to run? Are all these permissions absolutely required? Are the permissions requested as the user starts using specific sections of the app? Please provide details:",
                       "id": "mobile_permissions_detail",
                       "cond": "app_mobile_permissions_yes"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application use WebViews in such a way that they are configured to allow only the minimum set of protocol handlers required (ideally, only https). Potentially dangerous handlers, such as file, tel and app-id, are disabled ?",
+                      "text": "Does the application use WebViews in such a way that they are configured to allow only the minimum set of protocol handlers required (ideally, only https). Potentially dangerous handlers, such as file, tel and app-id, are disabled?",
                       "id": "app_mobile_webview_handlers",
                       "cond": "app_mobile_webview_yes",
                       "choices": [
@@ -4229,14 +4414,14 @@
                       "type": "tip",
                       "text": "Potentially dangerous handlers, such as file:, tel: and app-id: etc. should be disabled to avoid abuse/mis-use of these. For example, attackers can exploit such a vulnerability by putting an invisible &lt;iframe src=\"tel://xxx?call\"&gt;&lt;/iframe&gt; (where xxx can be replaced by a premium number)",
                       "id": "warn_app_mobile_webview_handlers",
-                      "why": "Explain what protocol handlers are allowed and why? What checks are in place to deter abuse ?",
+                      "why": "Explain what protocol handlers are allowed and why? What checks are in place to deter abuse?",
                       "warn": "yes",
                       "cond": "app_mobile_webview_handlers_no",
                       "severity": "high"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application expose any of its native methods to a WebView ?",
+                      "text": "Does the application expose any of its native methods to a WebView?",
                       "id": "app_mobile_webview_native_methods",
                       "cond": "app_mobile_webview_yes",
                       "choices": [
@@ -4246,7 +4431,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the WebView only render JavaScript contained within the app package/bundle ?",
+                      "text": "Does the WebView only render JavaScript contained within the app package/bundle?",
                       "id": "app_mobile_webview_native_methods_bundled",
                       "cond": "app_mobile_webview_native_methods_yes",
                       "choices": [
@@ -4258,7 +4443,7 @@
                       "type": "tip",
                       "text": "Mobile platforms offer a way that enables JavaScript executed in a WebView to call and use native functions within a mobile App. This can be potentially dangerous unless it's only allowed via the bundled and trusted JavaScript.",
                       "id": "warn_app_mobile_webview_native_methods_bundled",
-                      "why": "Explain why does the application need to render JavaScript from outside the package/bundle ?",
+                      "why": "Explain why does the application need to render JavaScript from outside the package/bundle?",
                       "warn": "yes",
                       "cond": "app_mobile_webview_native_methods_bundled_no",
                       "severity": "high"
@@ -4284,7 +4469,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app implement two or more functionally independent methods of root detection ?",
+                      "text": "Does the app implement two or more functionally independent methods of root detection?",
                       "id": "mobile_reverse_engg_root_detection",
                       "choices": [
                         {"mobile_reverse_engg_root_detection_yes": "Yes"},
@@ -4295,14 +4480,14 @@
                       "type": "tip",
                       "text": "Root detection is not highly effective on its own, but having some root checks sprinkled throughout the app can improve the effectiveness of the overall anti-tampering scheme.",
                       "id": "warn_mobile_reverse_engg_root_detection",
-                      "why": "Explain why does the application not make use of root detection ?",
+                      "why": "Explain why does the application not make use of root detection?",
                       "warn": "yes",
                       "cond": "mobile_reverse_engg_root_detection_no",
                       "severity": "high"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app respond to the presence of a rooted device either by alerting the user or terminating itself ?",
+                      "text": "Does the app respond to the presence of a rooted device either by alerting the user or terminating itself?",
                       "id": "mobile_reverse_engg_root_detection_response",
                       "cond": "mobile_reverse_engg_root_detection_yes",
                       "choices": [
@@ -4314,14 +4499,14 @@
                       "type": "tip",
                       "text": "Application should respond to the presence of rooted device and alert the user or terminate itself to avoid tampering.",
                       "id": "warn_mobile_reverse_engg_root_detection_alert",
-                      "why": "Explain why does the application not terminate itself or alert the user ?",
+                      "why": "Explain why does the application not terminate itself or alert the user?",
                       "warn": "yes",
                       "cond": "mobile_reverse_engg_root_detection_response_no",
                       "severity": "medium"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the application implement multiple functionally independent debugging defenses that, in context of the overall protection scheme, force adversaries to invest significant manual effort to enable debugging ? All available debugging protocols must be covered (e.g. JDWP and native).",
+                      "text": "Does the application implement multiple functionally independent debugging defenses that, in context of the overall protection scheme, force adversaries to invest significant manual effort to enable debugging? All available debugging protocols must be covered (e.g. JDWP and native).",
                       "id": "mobile_reverse_engg_dbg_defense",
                       "choices": [
                         {"mobile_reverse_engg_dbg_defense_yes": "Yes"},
@@ -4330,14 +4515,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain why debugging defense cannot be put into place:",
                       "id": "mobile_reverse_engg_dbg_defense_detail",
                       "cond": "mobile_reverse_engg_dbg_defense_no"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app detect, and respond to, tampering with executable files and critical data ?",
+                      "text": "Does the app detect, and respond to, tampering with executable files and critical data?",
                       "id": "mobile_reverse_engg_exe_tampering",
                       "choices": [
                         {"mobile_reverse_engg_exe_tampering_yes": "Yes"},
@@ -4346,14 +4531,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain why tampering with data is not important:",
                       "id": "mobile_reverse_engg_exe_tampering_detail",
                       "cond": "mobile_reverse_engg_exe_tampering_no"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app make sure that all executable files and libraries belonging to the app are either encrypted on the file level and/or important code and data segments inside the executables are encrypted or packed ? Trivial static analysis should not reveal important code or data.",
+                      "text": "Does the app make sure that all executable files and libraries belonging to the app are either encrypted on the file level and/or important code and data segments inside the executables are encrypted or packed? Trivial static analysis should not reveal important code or data.",
                       "id": "mobile_reverse_engg_exe_packing",
                       "choices": [
                         {"mobile_reverse_engg_exe_packing_yes": "Yes"},
@@ -4362,7 +4547,7 @@
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app implement a 'device binding' functionality when a mobile device is treated as being trusted ? Does it make sure that device fingerprint is derived from multiple device properties ?",
+                      "text": "Does the app implement a 'device binding' functionality when a mobile device is treated as being trusted? Does it make sure that device fingerprint is derived from multiple device properties?",
                       "id": "mobile_reverse_engg_device_binding",
                       "choices": [
                         {"mobile_reverse_engg_device_binding_yes": "Yes"},
@@ -4371,14 +4556,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain why device binding is not implemented:",
                       "id": "mobile_reverse_engg_device_binding_detail",
                       "cond": "mobile_reverse_engg_device_binding_no"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app detect the presence of widely used reverse engineering tools, such as code injection tools, hooking frameworks and debugging servers ?",
+                      "text": "Does the app detect the presence of widely used reverse engineering tools, such as code injection tools, hooking frameworks and debugging servers?",
                       "id": "mobile_reverse_engg_tools",
                       "choices": [
                         {"mobile_reverse_engg_tools_yes": "Yes"},
@@ -4387,14 +4572,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain why the detection of presence of reverse engineering tools is not implemented:",
                       "id": "mobile_reverse_engg_tools_detail",
                       "cond": "mobile_reverse_engg_tools_no"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app use obfuscation and make sure that obfuscating transformations and functional defenses are interdependent and well-integrated throughout ?",
+                      "text": "Does the app use obfuscation and make sure that obfuscating transformations and functional defenses are interdependent and well-integrated throughout?",
                       "id": "mobile_reverse_engg_obfus",
                       "choices": [
                         {"mobile_reverse_engg_obfus_yes": "Yes"},
@@ -4403,14 +4588,14 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain why obfuscation is not implemented well:",
                       "id": "mobile_reverse_engg_obfus_detail",
                       "cond": "mobile_reverse_engg_obfus_no"
                     },
                     {
                       "type": "radiogroup",
-                      "text": "Does the app detect, and respond to, being run in an emulator (simulator) using any standard method ?",
+                      "text": "Does the app detect, and respond to, being run in an emulator (simulator) using any standard method?",
                       "id": "mobile_reverse_engg_emulator",
                       "choices": [
                         {"mobile_reverse_engg_emulator_yes": "Yes"},
@@ -4419,7 +4604,7 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please explain why emulator detection is not implemented:",
                       "id": "mobile_reverse_engg_emulator_detail",
                       "cond": "mobile_reverse_engg_emulator_no"
@@ -4433,7 +4618,7 @@
                   "items": [
                     {
                       "type": "checkgroup",
-                      "text": "Please select which of the following security controls and build settings does the application implement or make use of ?",
+                      "text": "Please select which of the following security controls and build settings does the application implement or make use of?",
                       "id": "app_mobile_code_quality",
                       "choices": [
                         {"app_mobile_code_quality_code_signing": "Verified that the app is signed and provisioned with valid certificate."},
@@ -4461,7 +4646,7 @@
                     },
                     {
                       "type": "box",
-                      "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                      "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "text": "Please indicate if any of the above build settings or controls are unchecked (not implemented). Explain why those are not implemented and what's the future course of action:",
                       "id": "app_mobile_code_quality_detail",
                       "cond": "!app_mobile_code_quality_code_signing || !app_mobile_code_quality_release || !app_mobile_code_quality_dbg_symbols || !app_mobile_code_quality_dbg_code || !app_mobile_code_quality_3rd_party_libs || !app_mobile_code_quality_exceptions || !app_mobile_code_quality_access || !app_mobile_code_quality_unmanaged_code || !app_mobile_code_quality_toolchain"
@@ -4472,12 +4657,113 @@
             },
             {
               "type": "block",
-              "text": "16: Additional Notes",
+              "text": "16: SOC2 Compliance",
+              "id": "block_soc",
+              "cond": "app_soc_yes",
+              "items": [
+                {
+                  "type": "info",
+                  "id": "app_soc_intro",
+                  "text": "Projects subject to SOC2 compliance require additional approval for any changes flagged as security changes.  Please answer the following questions to assist with ensuring these changes are properly reviewed.  Some of these changes may have been discussed in other sections, and you may simply refer to those sections.  It is important in this section to clarify any [BUG_TRACKER_SYSTEM_NAME] tickets that require review."
+                },
+                {
+                  "type": "checkgroup",
+                  "text": "Were any changes made to any of the following elemenents?",
+                  "id": "app_soc_elements",
+                  "defaultChoice": false,
+                  "choices": [
+                    {"app_soc_authentication": "Authentication, authorization or session management systems (e.g. login)"},
+                    {"app_soc_administrative": "Administrative / privileged account management systems (e.g. admin tools)"},
+                    {"app_soc_cryptographic": "Cryptographic, digital signature or hash functions (e.g. any change to account number of password fields)"},
+                    {"app_soc_key_management": "Key management functions (e.g. batch imports)"},
+                    {"app_soc_logging": "Logging frameworks (e.g. transaction logging)"},
+                    {"app_soc_access_control": "Logical access controls / data segregation controls (e.g. database structure change)"},
+                    {"app_soc_infrastructure": "Server infrastructure devices / firewall rules (e.g. new servers)"},
+                    {"app_soc_major_components": "Major system components (e.g. new modules)"},
+                    {"app_soc_sensitive_data": "Addition / removal of sensitive data elements (e.g. SSN, date of birth, account number, password)"},
+                    {"app_soc_restricted_data": "Addition / removal of privacy, credit card and/or health information"}
+                  ]
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to authentication, authorization or session management systems.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_authentication",
+                  "id": "app_soc_detail_authentication"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to administrative / privileged account management systems.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_administrative",
+                  "id": "app_soc_detail_administrative"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to cryptographic, digital signature or hash fucntions.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_cryptographic",
+                  "id": "app_soc_detail_cryptographic"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to key management functions.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_key_management",
+                  "id": "app_soc_detail_key_management"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to logging frameworks.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_logging",
+                  "id": "app_soc_detail_loging"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to logical access controls / data segregation controls.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_access_control",
+                  "id": "app_soc_detail_access_control"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to server infrastructure devices / firewall rules.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_infrastructure",
+                  "id": "app_soc_detail_infrastructure"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change to major system components.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_major_components",
+                  "id": "app_soc_detail_major_components"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change involving addition / removal of sensitive data elements.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_sensitive_data",
+                  "id": "app_soc_detail_sensitive_data"
+                },
+                {
+                  "type": "box",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
+                  "text": "Provide details about each change involving addition / removal of privacy, credit card and/or health information.  Include related [BUG_TRACKER_SYSTEM_NAME] ticket references for review and approval.",
+                  "cond": "app_soc_restricted_data",
+                  "id": "app_soc_detail_restricted_data"
+                }
+              ]
+            },
+            {
+              "type": "block",
+              "text": "17: Additional Notes",
               "id": "block_notes",
               "items": [
                 {
                   "type": "box",
-                  "maxlength" : "[MAXLENGTH_BOX_ITEM]",
+                  "maxlength": "[MAXLENGTH_BOX_ITEM]",
                   "text": "Provide any additional information about the security of your application.  Please discuss any security topics relating to the project that are not otherwise discussed in the questionnaire.  Provide detail to help clarify answers in the form.  For example, if the project has subcomponents that use different services or databases, then this section can be used to help clarify how certain answers in the form may apply differently across different subcomponents or services.",
                   "id": "app_other"
                 }
@@ -4487,20 +4773,20 @@
         },
         {
           "type": "block",
-          "text": "17: Feedback",
+          "text": "18: Feedback",
           "id": "feedback_block",
           "items": [
             {
               "type": "box",
-              "maxlength" : "[MAXLENGTH_BOX_ITEM]",
-              "text": "<b>Congratulations!</b> You have made it to the end of this questionnaire. If you did not answer some questions or had difficulty answering any, explain why.  If you can spare another minute, please let us know how we can improve it. Your feedback is highly appreciated.",
+              "maxlength": "[MAXLENGTH_BOX_ITEM]",
+              "text": "If you did not answer some questions or had difficulty answering any, explain why.  If you can spare another minute, please let us know how we can improve it. Your feedback is highly appreciated.",
               "id": "feedback"
             }
           ]
         },
         {
           "type": "info",
-          "text": "You have now completed the questionnaire. You can now 'Submit' to submit it for review. An e-mail will be sent to you and reviewers after you submit. You may also export answers and keep it for your own records or <a id=\"_app_contact_email\" href=\"[TEAM_CONTACT_EMAIL_HREF]?CC=YourSecurityChampion@[ORGANIZATION_NAME].com&Subject=Completed Architecture Review for <Application Name>\" >email the JSON output file</a>."
+          "text": "<b>Congratulations!</b> You have made it to the end of this questionnaire. You can now 'Submit' to submit it for review. An e-mail will be sent to you and reviewers after you submit. You may also export answers and keep it for your own records or <a id=\"_app_contact_email\" href=\"[TEAM_CONTACT_EMAIL_HREF]?CC=YourSecurityChampion@[ORGANIZATION_NAME].com&Subject=Completed Architecture Review for <Application Name>\"> email the JSON output file</a>."
         }
       ]
     }
