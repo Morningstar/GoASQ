@@ -1416,7 +1416,7 @@
                 },
                 {
                   "type": "radiogroup",
-                  "text": "Is CloudFront or ALB (Application Load Balancer) <a href\"https://aws.amazon.com/waf\">WAF</a> (Web Application Firewall) enabled?",
+                  "text": "Is CloudFront or ALB (Application Load Balancer) <a href=\"https://aws.amazon.com/waf\">WAF</a> (Web Application Firewall) enabled?",
                   "id": "app_aws_cloudfront_waf",
                   "cond": "app_aws_cloudfront || app_aws_elb",
                   "choices": [
