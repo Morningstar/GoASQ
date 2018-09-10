@@ -1412,7 +1412,7 @@
                   "why": "Explain why CloudFront is not used:",
                   "warn": "yes",
                   "severity": "high",
-                  "cond": "app_web_browser_yes && (app_aws_cloudfront || app_aws_elb)"
+                  "cond": "app_web_browser_yes && !app_aws_cloudfront"
                 },
                 {
                   "type": "radiogroup",
@@ -1429,7 +1429,7 @@
                   "text": "The CloudFront Content Delivery Network (CDN) or Application Load Balancer (ALB) Web Application Firewall (WAF) should be enabled to help protect from common web exploits such as SQL injection and cross-site scripting.",
                   "id": "warn_app_aws_cloudfront_waf",
                   "why": "Explain why CloudFront or ALB WAF is not used:",
-                  "cond": "(app_aws_cloudfront || app_aws_elb) && !app_aws_cloudfront_waf_yes",
+                  "cond": "(app_aws_cloudfront || app_aws_elb) && app_aws_cloudfront_waf_no",
                   "warn": "yes",
                   "severity": "high"
                 },
