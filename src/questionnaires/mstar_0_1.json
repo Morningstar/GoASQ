@@ -1020,7 +1020,6 @@
                     {
                       "type": "box",
                       "text": "Explain how the data is encrypted at rest and how encryption keys are protected for securing Restricted and Confidential data when it is shared externally:",
-                      "cond": "app_info_shared_yes",
                       "maxlength": "[MAXLENGTH_BOX_ITEM]",
                       "id": "app_info_shared_detail"
                     },
