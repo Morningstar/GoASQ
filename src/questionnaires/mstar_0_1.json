@@ -2130,7 +2130,7 @@
                       "warn": "yes",
                       "name": "No automatic session timeout",
                       "severity": "medium",
-                      "why": "Please explain how you intend to rsolve this issue.  If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below.",
+                      "why": "Please explain how you intend to resolve this issue.  If you have compensating controls in place or feel that this issue does not constitute a risk in your specific circumstances, please explain below.",
                       "id": "warn_app_auth_cookies_timeout",
                       "cond": "app_auth_cookies_timeout_no"
                     },
