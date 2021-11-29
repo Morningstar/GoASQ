@@ -15,7 +15,7 @@ netaddr==0.7.19
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
 pycrypto==2.6.1
-python-ldap==3.0.0
+python-ldap==3.4.0
 requests==2.18.4
 shodan==1.7.7
 six==1.11.0
